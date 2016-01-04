@@ -1,0 +1,6 @@
+main{
+;
+}
+procedure p1{
+;
+}

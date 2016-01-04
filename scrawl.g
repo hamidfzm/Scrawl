@@ -7,17 +7,43 @@ grammar scrawl;
 	List vals;	
 }
 
-code	:	mainRoutine, ( procedure)+;
+code	:	mainRoutine ( procedure)+;
 
 mainRoutine
-	:	'main','{',(statement)+'}';
-	
+	:	'main' block;
+		
 procedure
-	:	'procedure' , ID,'{' (statement)+'}';
+	:	'procedure'  ID block;
 	
 statement
-	:	;
+	:	inSt
+	|	foreachSt
+	|	callSt;
 	
-ID : ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
+inSt	:	'in' (PATH|URL) block;
+
+foreachSt
+	:	'foreach' ID 'match' '(' XPATH ')' block;
+	
+callSt	:	
+		'parse' CALL_TYPE identifier 'by' ID;
+	
+block	:	statement
+	|	'{' (statement)* '}';
+	
+identifier
+	:	ID( '.' ID)*;
+	
+PATH	:	'/'? (('a'..'z'|'A'..'Z'|'0'..'9')+ '/')*;
+URL	:	'http''s'?'://' ('a'..'z'|'A'..'Z'|'0'..'9')+ ('.' ('a'..'z'|'A'..'Z'|'0'..'9')+)+ ;
+	
+ID 
+	:	 ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
+
+XPATH	:	.* ;
+
+CALL_TYPE
+	:	'first'|'last'|'now';
+
 
 	
