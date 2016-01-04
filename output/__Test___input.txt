@@ -1,5 +1,11 @@
 main{
 in "home/bardia/parsehtml"{
-ta = (DIV.P);
+foreach (DIV.DIV.P){
+parse first t by getUserInfo;
 }
+}
+}
+
+procedure getUserInfo{
+ta = (DIV.P)@text;
 }

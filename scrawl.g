@@ -7,8 +7,11 @@ grammar scrawl;
 	List vals;	
 }
 
-code	:	mainRoutine;
+code	:	mainRoutine procedure*;
 
+procedure
+	:	'procedure' ID block;
+	
 mainRoutine
 	:	'main' block;
 	
@@ -16,23 +19,32 @@ block	:	'{' statement*  '}';
 
 statement
 	:	inSt
-	|	assSt;
+	|	parseSt
+	|	assSt
+	|	foreachSt;
 	
-inSt	:	'in' (PATH) block;
+inSt	:	'in' (STRING) block;
 
 assSt	:	ID '=' exp ';';
 
+foreachSt
+	:	'foreach' selector block;
+	
+parseSt	:	'parse' 'first' exp 'by' ID ';'
+	|	'parse' 'last' exp 'by' ID ';';
+
 exp	:	ID
-	|	selector;
+	|	STRING
+	|	selector'@'ID;
 	
 selector	:
-		'(' xPath ')' ';';
+		'(' xPath ')';
 		
 xPath	:	TAG('['NUMBER']')?('.'TAG('['NUMBER']')?)*;
 
-PATH	:	 '"' .* '"';
+STRING	:	 '"' .* '"';
 
-ID	:	 ('a'..'z'|'_') ('a'..'z'|'0'..'9'|'_')*;
+ID	:	 ('a'..'z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 
 TAG	:	('A'..'Z')+;
 

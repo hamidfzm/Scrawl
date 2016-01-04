@@ -1,4 +1,4 @@
-// $ANTLR 3.5.1 /home/bardia/scrawl/scrawl.g 2016-01-04 17:40:34
+// $ANTLR 3.5.1 /home/bardia/scrawl/scrawl.g 2016-01-04 18:02:48
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -19,9 +19,16 @@ public class scrawlLexer extends Lexer {
 	public static final int T__16=16;
 	public static final int T__17=17;
 	public static final int T__18=18;
+	public static final int T__19=19;
+	public static final int T__20=20;
+	public static final int T__21=21;
+	public static final int T__22=22;
+	public static final int T__23=23;
+	public static final int T__24=24;
+	public static final int T__25=25;
 	public static final int ID=4;
 	public static final int NUMBER=5;
-	public static final int PATH=6;
+	public static final int STRING=6;
 	public static final int TAG=7;
 
 	// delegates
@@ -144,10 +151,10 @@ public class scrawlLexer extends Lexer {
 		try {
 			int _type = T__13;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/scrawl.g:7:7: ( '[' )
-			// /home/bardia/scrawl/scrawl.g:7:9: '['
+			// /home/bardia/scrawl/scrawl.g:7:7: ( '@' )
+			// /home/bardia/scrawl/scrawl.g:7:9: '@'
 			{
-			match('['); 
+			match('@'); 
 			}
 
 			state.type = _type;
@@ -164,10 +171,10 @@ public class scrawlLexer extends Lexer {
 		try {
 			int _type = T__14;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/scrawl.g:8:7: ( ']' )
-			// /home/bardia/scrawl/scrawl.g:8:9: ']'
+			// /home/bardia/scrawl/scrawl.g:8:7: ( '[' )
+			// /home/bardia/scrawl/scrawl.g:8:9: '['
 			{
-			match(']'); 
+			match('['); 
 			}
 
 			state.type = _type;
@@ -184,11 +191,10 @@ public class scrawlLexer extends Lexer {
 		try {
 			int _type = T__15;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/scrawl.g:9:7: ( 'in' )
-			// /home/bardia/scrawl/scrawl.g:9:9: 'in'
+			// /home/bardia/scrawl/scrawl.g:9:7: ( ']' )
+			// /home/bardia/scrawl/scrawl.g:9:9: ']'
 			{
-			match("in"); 
-
+			match(']'); 
 			}
 
 			state.type = _type;
@@ -205,10 +211,10 @@ public class scrawlLexer extends Lexer {
 		try {
 			int _type = T__16;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/scrawl.g:10:7: ( 'main' )
-			// /home/bardia/scrawl/scrawl.g:10:9: 'main'
+			// /home/bardia/scrawl/scrawl.g:10:7: ( 'by' )
+			// /home/bardia/scrawl/scrawl.g:10:9: 'by'
 			{
-			match("main"); 
+			match("by"); 
 
 			}
 
@@ -226,10 +232,11 @@ public class scrawlLexer extends Lexer {
 		try {
 			int _type = T__17;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/scrawl.g:11:7: ( '{' )
-			// /home/bardia/scrawl/scrawl.g:11:9: '{'
+			// /home/bardia/scrawl/scrawl.g:11:7: ( 'first' )
+			// /home/bardia/scrawl/scrawl.g:11:9: 'first'
 			{
-			match('{'); 
+			match("first"); 
+
 			}
 
 			state.type = _type;
@@ -246,10 +253,11 @@ public class scrawlLexer extends Lexer {
 		try {
 			int _type = T__18;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/scrawl.g:12:7: ( '}' )
-			// /home/bardia/scrawl/scrawl.g:12:9: '}'
+			// /home/bardia/scrawl/scrawl.g:12:7: ( 'foreach' )
+			// /home/bardia/scrawl/scrawl.g:12:9: 'foreach'
 			{
-			match('}'); 
+			match("foreach"); 
+
 			}
 
 			state.type = _type;
@@ -261,16 +269,161 @@ public class scrawlLexer extends Lexer {
 	}
 	// $ANTLR end "T__18"
 
-	// $ANTLR start "PATH"
-	public final void mPATH() throws RecognitionException {
+	// $ANTLR start "T__19"
+	public final void mT__19() throws RecognitionException {
 		try {
-			int _type = PATH;
+			int _type = T__19;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/scrawl.g:33:6: ( '\"' ( . )* '\"' )
-			// /home/bardia/scrawl/scrawl.g:33:9: '\"' ( . )* '\"'
+			// /home/bardia/scrawl/scrawl.g:13:7: ( 'in' )
+			// /home/bardia/scrawl/scrawl.g:13:9: 'in'
+			{
+			match("in"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__19"
+
+	// $ANTLR start "T__20"
+	public final void mT__20() throws RecognitionException {
+		try {
+			int _type = T__20;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /home/bardia/scrawl/scrawl.g:14:7: ( 'last' )
+			// /home/bardia/scrawl/scrawl.g:14:9: 'last'
+			{
+			match("last"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__20"
+
+	// $ANTLR start "T__21"
+	public final void mT__21() throws RecognitionException {
+		try {
+			int _type = T__21;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /home/bardia/scrawl/scrawl.g:15:7: ( 'main' )
+			// /home/bardia/scrawl/scrawl.g:15:9: 'main'
+			{
+			match("main"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__21"
+
+	// $ANTLR start "T__22"
+	public final void mT__22() throws RecognitionException {
+		try {
+			int _type = T__22;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /home/bardia/scrawl/scrawl.g:16:7: ( 'parse' )
+			// /home/bardia/scrawl/scrawl.g:16:9: 'parse'
+			{
+			match("parse"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__22"
+
+	// $ANTLR start "T__23"
+	public final void mT__23() throws RecognitionException {
+		try {
+			int _type = T__23;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /home/bardia/scrawl/scrawl.g:17:7: ( 'procedure' )
+			// /home/bardia/scrawl/scrawl.g:17:9: 'procedure'
+			{
+			match("procedure"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__23"
+
+	// $ANTLR start "T__24"
+	public final void mT__24() throws RecognitionException {
+		try {
+			int _type = T__24;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /home/bardia/scrawl/scrawl.g:18:7: ( '{' )
+			// /home/bardia/scrawl/scrawl.g:18:9: '{'
+			{
+			match('{'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__24"
+
+	// $ANTLR start "T__25"
+	public final void mT__25() throws RecognitionException {
+		try {
+			int _type = T__25;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /home/bardia/scrawl/scrawl.g:19:7: ( '}' )
+			// /home/bardia/scrawl/scrawl.g:19:9: '}'
+			{
+			match('}'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__25"
+
+	// $ANTLR start "STRING"
+	public final void mSTRING() throws RecognitionException {
+		try {
+			int _type = STRING;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// /home/bardia/scrawl/scrawl.g:45:8: ( '\"' ( . )* '\"' )
+			// /home/bardia/scrawl/scrawl.g:45:11: '\"' ( . )* '\"'
 			{
 			match('\"'); 
-			// /home/bardia/scrawl/scrawl.g:33:13: ( . )*
+			// /home/bardia/scrawl/scrawl.g:45:15: ( . )*
 			loop1:
 			while (true) {
 				int alt1=2;
@@ -284,7 +437,7 @@ public class scrawlLexer extends Lexer {
 
 				switch (alt1) {
 				case 1 :
-					// /home/bardia/scrawl/scrawl.g:33:13: .
+					// /home/bardia/scrawl/scrawl.g:45:15: .
 					{
 					matchAny(); 
 					}
@@ -305,15 +458,15 @@ public class scrawlLexer extends Lexer {
 			// do for sure before leaving
 		}
 	}
-	// $ANTLR end "PATH"
+	// $ANTLR end "STRING"
 
 	// $ANTLR start "ID"
 	public final void mID() throws RecognitionException {
 		try {
 			int _type = ID;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/scrawl.g:35:4: ( ( 'a' .. 'z' | '_' ) ( 'a' .. 'z' | '0' .. '9' | '_' )* )
-			// /home/bardia/scrawl/scrawl.g:35:7: ( 'a' .. 'z' | '_' ) ( 'a' .. 'z' | '0' .. '9' | '_' )*
+			// /home/bardia/scrawl/scrawl.g:47:4: ( ( 'a' .. 'z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+			// /home/bardia/scrawl/scrawl.g:47:7: ( 'a' .. 'z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
 			{
 			if ( input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 				input.consume();
@@ -323,12 +476,12 @@ public class scrawlLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// /home/bardia/scrawl/scrawl.g:35:22: ( 'a' .. 'z' | '0' .. '9' | '_' )*
+			// /home/bardia/scrawl/scrawl.g:47:22: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
 			loop2:
 			while (true) {
 				int alt2=2;
 				int LA2_0 = input.LA(1);
-				if ( ((LA2_0 >= '0' && LA2_0 <= '9')||LA2_0=='_'||(LA2_0 >= 'a' && LA2_0 <= 'z')) ) {
+				if ( ((LA2_0 >= '0' && LA2_0 <= '9')||(LA2_0 >= 'A' && LA2_0 <= 'Z')||LA2_0=='_'||(LA2_0 >= 'a' && LA2_0 <= 'z')) ) {
 					alt2=1;
 				}
 
@@ -336,7 +489,7 @@ public class scrawlLexer extends Lexer {
 				case 1 :
 					// /home/bardia/scrawl/scrawl.g:
 					{
-					if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
+					if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 						input.consume();
 					}
 					else {
@@ -368,10 +521,10 @@ public class scrawlLexer extends Lexer {
 		try {
 			int _type = TAG;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/scrawl.g:37:5: ( ( 'A' .. 'Z' )+ )
-			// /home/bardia/scrawl/scrawl.g:37:7: ( 'A' .. 'Z' )+
+			// /home/bardia/scrawl/scrawl.g:49:5: ( ( 'A' .. 'Z' )+ )
+			// /home/bardia/scrawl/scrawl.g:49:7: ( 'A' .. 'Z' )+
 			{
-			// /home/bardia/scrawl/scrawl.g:37:7: ( 'A' .. 'Z' )+
+			// /home/bardia/scrawl/scrawl.g:49:7: ( 'A' .. 'Z' )+
 			int cnt3=0;
 			loop3:
 			while (true) {
@@ -420,11 +573,11 @@ public class scrawlLexer extends Lexer {
 		try {
 			int _type = NUMBER;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/scrawl.g:39:8: ( '1' .. '9' ( '0' .. '9' )+ )
-			// /home/bardia/scrawl/scrawl.g:39:10: '1' .. '9' ( '0' .. '9' )+
+			// /home/bardia/scrawl/scrawl.g:51:8: ( '1' .. '9' ( '0' .. '9' )+ )
+			// /home/bardia/scrawl/scrawl.g:51:10: '1' .. '9' ( '0' .. '9' )+
 			{
 			matchRange('1','9'); 
-			// /home/bardia/scrawl/scrawl.g:39:19: ( '0' .. '9' )+
+			// /home/bardia/scrawl/scrawl.g:51:19: ( '0' .. '9' )+
 			int cnt4=0;
 			loop4:
 			while (true) {
@@ -470,8 +623,8 @@ public class scrawlLexer extends Lexer {
 
 	@Override
 	public void mTokens() throws RecognitionException {
-		// /home/bardia/scrawl/scrawl.g:1:8: ( T__8 | T__9 | T__10 | T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | PATH | ID | TAG | NUMBER )
-		int alt5=15;
+		// /home/bardia/scrawl/scrawl.g:1:8: ( T__8 | T__9 | T__10 | T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | STRING | ID | TAG | NUMBER )
+		int alt5=22;
 		switch ( input.LA(1) ) {
 		case '(':
 			{
@@ -498,104 +651,375 @@ public class scrawlLexer extends Lexer {
 			alt5=5;
 			}
 			break;
-		case '[':
+		case '@':
 			{
 			alt5=6;
 			}
 			break;
-		case ']':
+		case '[':
 			{
 			alt5=7;
 			}
 			break;
-		case 'i':
+		case ']':
 			{
-			int LA5_8 = input.LA(2);
-			if ( (LA5_8=='n') ) {
-				int LA5_16 = input.LA(3);
-				if ( ((LA5_16 >= '0' && LA5_16 <= '9')||LA5_16=='_'||(LA5_16 >= 'a' && LA5_16 <= 'z')) ) {
-					alt5=13;
+			alt5=8;
+			}
+			break;
+		case 'b':
+			{
+			int LA5_9 = input.LA(2);
+			if ( (LA5_9=='y') ) {
+				int LA5_21 = input.LA(3);
+				if ( ((LA5_21 >= '0' && LA5_21 <= '9')||(LA5_21 >= 'A' && LA5_21 <= 'Z')||LA5_21=='_'||(LA5_21 >= 'a' && LA5_21 <= 'z')) ) {
+					alt5=20;
 				}
 
 				else {
-					alt5=8;
+					alt5=9;
 				}
 
 			}
 
 			else {
-				alt5=13;
+				alt5=20;
+			}
+
+			}
+			break;
+		case 'f':
+			{
+			switch ( input.LA(2) ) {
+			case 'i':
+				{
+				int LA5_22 = input.LA(3);
+				if ( (LA5_22=='r') ) {
+					int LA5_30 = input.LA(4);
+					if ( (LA5_30=='s') ) {
+						int LA5_37 = input.LA(5);
+						if ( (LA5_37=='t') ) {
+							int LA5_43 = input.LA(6);
+							if ( ((LA5_43 >= '0' && LA5_43 <= '9')||(LA5_43 >= 'A' && LA5_43 <= 'Z')||LA5_43=='_'||(LA5_43 >= 'a' && LA5_43 <= 'z')) ) {
+								alt5=20;
+							}
+
+							else {
+								alt5=10;
+							}
+
+						}
+
+						else {
+							alt5=20;
+						}
+
+					}
+
+					else {
+						alt5=20;
+					}
+
+				}
+
+				else {
+					alt5=20;
+				}
+
+				}
+				break;
+			case 'o':
+				{
+				int LA5_23 = input.LA(3);
+				if ( (LA5_23=='r') ) {
+					int LA5_31 = input.LA(4);
+					if ( (LA5_31=='e') ) {
+						int LA5_38 = input.LA(5);
+						if ( (LA5_38=='a') ) {
+							int LA5_44 = input.LA(6);
+							if ( (LA5_44=='c') ) {
+								int LA5_50 = input.LA(7);
+								if ( (LA5_50=='h') ) {
+									int LA5_53 = input.LA(8);
+									if ( ((LA5_53 >= '0' && LA5_53 <= '9')||(LA5_53 >= 'A' && LA5_53 <= 'Z')||LA5_53=='_'||(LA5_53 >= 'a' && LA5_53 <= 'z')) ) {
+										alt5=20;
+									}
+
+									else {
+										alt5=11;
+									}
+
+								}
+
+								else {
+									alt5=20;
+								}
+
+							}
+
+							else {
+								alt5=20;
+							}
+
+						}
+
+						else {
+							alt5=20;
+						}
+
+					}
+
+					else {
+						alt5=20;
+					}
+
+				}
+
+				else {
+					alt5=20;
+				}
+
+				}
+				break;
+			default:
+				alt5=20;
+			}
+			}
+			break;
+		case 'i':
+			{
+			int LA5_11 = input.LA(2);
+			if ( (LA5_11=='n') ) {
+				int LA5_24 = input.LA(3);
+				if ( ((LA5_24 >= '0' && LA5_24 <= '9')||(LA5_24 >= 'A' && LA5_24 <= 'Z')||LA5_24=='_'||(LA5_24 >= 'a' && LA5_24 <= 'z')) ) {
+					alt5=20;
+				}
+
+				else {
+					alt5=12;
+				}
+
+			}
+
+			else {
+				alt5=20;
+			}
+
+			}
+			break;
+		case 'l':
+			{
+			int LA5_12 = input.LA(2);
+			if ( (LA5_12=='a') ) {
+				int LA5_25 = input.LA(3);
+				if ( (LA5_25=='s') ) {
+					int LA5_33 = input.LA(4);
+					if ( (LA5_33=='t') ) {
+						int LA5_39 = input.LA(5);
+						if ( ((LA5_39 >= '0' && LA5_39 <= '9')||(LA5_39 >= 'A' && LA5_39 <= 'Z')||LA5_39=='_'||(LA5_39 >= 'a' && LA5_39 <= 'z')) ) {
+							alt5=20;
+						}
+
+						else {
+							alt5=13;
+						}
+
+					}
+
+					else {
+						alt5=20;
+					}
+
+				}
+
+				else {
+					alt5=20;
+				}
+
+			}
+
+			else {
+				alt5=20;
 			}
 
 			}
 			break;
 		case 'm':
 			{
-			int LA5_9 = input.LA(2);
-			if ( (LA5_9=='a') ) {
-				int LA5_17 = input.LA(3);
-				if ( (LA5_17=='i') ) {
-					int LA5_19 = input.LA(4);
-					if ( (LA5_19=='n') ) {
-						int LA5_20 = input.LA(5);
-						if ( ((LA5_20 >= '0' && LA5_20 <= '9')||LA5_20=='_'||(LA5_20 >= 'a' && LA5_20 <= 'z')) ) {
-							alt5=13;
+			int LA5_13 = input.LA(2);
+			if ( (LA5_13=='a') ) {
+				int LA5_26 = input.LA(3);
+				if ( (LA5_26=='i') ) {
+					int LA5_34 = input.LA(4);
+					if ( (LA5_34=='n') ) {
+						int LA5_40 = input.LA(5);
+						if ( ((LA5_40 >= '0' && LA5_40 <= '9')||(LA5_40 >= 'A' && LA5_40 <= 'Z')||LA5_40=='_'||(LA5_40 >= 'a' && LA5_40 <= 'z')) ) {
+							alt5=20;
 						}
 
 						else {
-							alt5=9;
+							alt5=14;
 						}
 
 					}
 
 					else {
-						alt5=13;
+						alt5=20;
 					}
 
 				}
 
 				else {
-					alt5=13;
+					alt5=20;
 				}
 
 			}
 
 			else {
-				alt5=13;
+				alt5=20;
 			}
 
 			}
 			break;
+		case 'p':
+			{
+			switch ( input.LA(2) ) {
+			case 'a':
+				{
+				int LA5_27 = input.LA(3);
+				if ( (LA5_27=='r') ) {
+					int LA5_35 = input.LA(4);
+					if ( (LA5_35=='s') ) {
+						int LA5_41 = input.LA(5);
+						if ( (LA5_41=='e') ) {
+							int LA5_47 = input.LA(6);
+							if ( ((LA5_47 >= '0' && LA5_47 <= '9')||(LA5_47 >= 'A' && LA5_47 <= 'Z')||LA5_47=='_'||(LA5_47 >= 'a' && LA5_47 <= 'z')) ) {
+								alt5=20;
+							}
+
+							else {
+								alt5=15;
+							}
+
+						}
+
+						else {
+							alt5=20;
+						}
+
+					}
+
+					else {
+						alt5=20;
+					}
+
+				}
+
+				else {
+					alt5=20;
+				}
+
+				}
+				break;
+			case 'r':
+				{
+				int LA5_28 = input.LA(3);
+				if ( (LA5_28=='o') ) {
+					int LA5_36 = input.LA(4);
+					if ( (LA5_36=='c') ) {
+						int LA5_42 = input.LA(5);
+						if ( (LA5_42=='e') ) {
+							int LA5_48 = input.LA(6);
+							if ( (LA5_48=='d') ) {
+								int LA5_52 = input.LA(7);
+								if ( (LA5_52=='u') ) {
+									int LA5_54 = input.LA(8);
+									if ( (LA5_54=='r') ) {
+										int LA5_56 = input.LA(9);
+										if ( (LA5_56=='e') ) {
+											int LA5_57 = input.LA(10);
+											if ( ((LA5_57 >= '0' && LA5_57 <= '9')||(LA5_57 >= 'A' && LA5_57 <= 'Z')||LA5_57=='_'||(LA5_57 >= 'a' && LA5_57 <= 'z')) ) {
+												alt5=20;
+											}
+
+											else {
+												alt5=16;
+											}
+
+										}
+
+										else {
+											alt5=20;
+										}
+
+									}
+
+									else {
+										alt5=20;
+									}
+
+								}
+
+								else {
+									alt5=20;
+								}
+
+							}
+
+							else {
+								alt5=20;
+							}
+
+						}
+
+						else {
+							alt5=20;
+						}
+
+					}
+
+					else {
+						alt5=20;
+					}
+
+				}
+
+				else {
+					alt5=20;
+				}
+
+				}
+				break;
+			default:
+				alt5=20;
+			}
+			}
+			break;
 		case '{':
 			{
-			alt5=10;
+			alt5=17;
 			}
 			break;
 		case '}':
 			{
-			alt5=11;
+			alt5=18;
 			}
 			break;
 		case '\"':
 			{
-			alt5=12;
+			alt5=19;
 			}
 			break;
 		case '_':
 		case 'a':
-		case 'b':
 		case 'c':
 		case 'd':
 		case 'e':
-		case 'f':
 		case 'g':
 		case 'h':
 		case 'j':
 		case 'k':
-		case 'l':
 		case 'n':
 		case 'o':
-		case 'p':
 		case 'q':
 		case 'r':
 		case 's':
@@ -607,7 +1031,7 @@ public class scrawlLexer extends Lexer {
 		case 'y':
 		case 'z':
 			{
-			alt5=13;
+			alt5=20;
 			}
 			break;
 		case 'A':
@@ -637,7 +1061,7 @@ public class scrawlLexer extends Lexer {
 		case 'Y':
 		case 'Z':
 			{
-			alt5=14;
+			alt5=21;
 			}
 			break;
 		case '1':
@@ -650,7 +1074,7 @@ public class scrawlLexer extends Lexer {
 		case '8':
 		case '9':
 			{
-			alt5=15;
+			alt5=22;
 			}
 			break;
 		default:
@@ -737,28 +1161,77 @@ public class scrawlLexer extends Lexer {
 				}
 				break;
 			case 12 :
-				// /home/bardia/scrawl/scrawl.g:1:74: PATH
+				// /home/bardia/scrawl/scrawl.g:1:74: T__19
 				{
-				mPATH(); 
+				mT__19(); 
 
 				}
 				break;
 			case 13 :
-				// /home/bardia/scrawl/scrawl.g:1:79: ID
+				// /home/bardia/scrawl/scrawl.g:1:80: T__20
+				{
+				mT__20(); 
+
+				}
+				break;
+			case 14 :
+				// /home/bardia/scrawl/scrawl.g:1:86: T__21
+				{
+				mT__21(); 
+
+				}
+				break;
+			case 15 :
+				// /home/bardia/scrawl/scrawl.g:1:92: T__22
+				{
+				mT__22(); 
+
+				}
+				break;
+			case 16 :
+				// /home/bardia/scrawl/scrawl.g:1:98: T__23
+				{
+				mT__23(); 
+
+				}
+				break;
+			case 17 :
+				// /home/bardia/scrawl/scrawl.g:1:104: T__24
+				{
+				mT__24(); 
+
+				}
+				break;
+			case 18 :
+				// /home/bardia/scrawl/scrawl.g:1:110: T__25
+				{
+				mT__25(); 
+
+				}
+				break;
+			case 19 :
+				// /home/bardia/scrawl/scrawl.g:1:116: STRING
+				{
+				mSTRING(); 
+
+				}
+				break;
+			case 20 :
+				// /home/bardia/scrawl/scrawl.g:1:123: ID
 				{
 				mID(); 
 
 				}
 				break;
-			case 14 :
-				// /home/bardia/scrawl/scrawl.g:1:82: TAG
+			case 21 :
+				// /home/bardia/scrawl/scrawl.g:1:126: TAG
 				{
 				mTAG(); 
 
 				}
 				break;
-			case 15 :
-				// /home/bardia/scrawl/scrawl.g:1:86: NUMBER
+			case 22 :
+				// /home/bardia/scrawl/scrawl.g:1:130: NUMBER
 				{
 				mNUMBER(); 
 
