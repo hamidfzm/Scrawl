@@ -1,4 +1,5 @@
 main{
 in "home/bardia/parsehtml"{
+ta = (DIV.P);
 }
 }

@@ -15,8 +15,26 @@ mainRoutine
 block	:	'{' statement*  '}';
 
 statement
-	:	inSt;
+	:	inSt
+	|	assSt;
 	
 inSt	:	'in' (PATH) block;
 
+assSt	:	ID '=' exp ';';
+
+exp	:	ID
+	|	selector;
+	
+selector	:
+		'(' xPath ')' ';';
+		
+xPath	:	TAG('['NUMBER']')?('.'TAG('['NUMBER']')?)*;
+
 PATH	:	 '"' .* '"';
+
+ID	:	 ('a'..'z'|'_') ('a'..'z'|'0'..'9'|'_')*;
+
+TAG	:	('A'..'Z')+;
+
+NUMBER	:	'1'..'9' '0'..'9'+ ;
+
