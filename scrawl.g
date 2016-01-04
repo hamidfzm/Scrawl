@@ -13,5 +13,10 @@ mainRoutine
 	:	'main' block;
 	
 block	:	'{' statement*  '}';
+
 statement
-	:	';';
+	:	inSt;
+	
+inSt	:	'in' (PATH) block;
+
+PATH	:	 '"' .* '"';

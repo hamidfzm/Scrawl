@@ -1,4 +1,4 @@
-// $ANTLR 3.5.1 /home/bardia/scrawl/scrawl.g 2016-01-04 17:13:26
+// $ANTLR 3.5.1 /home/bardia/scrawl/scrawl.g 2016-01-04 17:22:52
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -10,13 +10,15 @@ import java.io.IOException;
 @SuppressWarnings("all")
 public class scrawlParser extends DebugParser {
 	public static final String[] tokenNames = new String[] {
-		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "';'", "'main'", "'{'", "'}'"
+		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "PATH", "'in'", "'main'", "'{'", 
+		"'}'"
 	};
 	public static final int EOF=-1;
-	public static final int T__4=4;
 	public static final int T__5=5;
 	public static final int T__6=6;
 	public static final int T__7=7;
+	public static final int T__8=8;
+	public static final int PATH=4;
 
 	// delegates
 	public Parser[] getDelegates() {
@@ -27,7 +29,7 @@ public class scrawlParser extends DebugParser {
 
 
 	public static final String[] ruleNames = new String[] {
-		"invalidRule", "mainRoutine", "block", "statement", "code"
+		"invalidRule", "mainRoutine", "code", "inSt", "statement", "block"
 	};
 
 	public static final boolean[] decisionCanBacktrack = new boolean[] {
@@ -134,7 +136,7 @@ public class scrawlParser extends DebugParser {
 			// /home/bardia/scrawl/scrawl.g:13:4: 'main' block
 			{
 			dbg.location(13,4);
-			match(input,5,FOLLOW_5_in_mainRoutine25); dbg.location(13,11);
+			match(input,6,FOLLOW_6_in_mainRoutine25); dbg.location(13,11);
 			pushFollow(FOLLOW_block_in_mainRoutine27);
 			block();
 			state._fsp--;
@@ -178,7 +180,7 @@ public class scrawlParser extends DebugParser {
 			// /home/bardia/scrawl/scrawl.g:15:9: '{' ( statement )* '}'
 			{
 			dbg.location(15,9);
-			match(input,6,FOLLOW_6_in_block36); dbg.location(15,13);
+			match(input,7,FOLLOW_7_in_block36); dbg.location(15,13);
 			// /home/bardia/scrawl/scrawl.g:15:13: ( statement )*
 			try { dbg.enterSubRule(1);
 
@@ -188,7 +190,7 @@ public class scrawlParser extends DebugParser {
 				try { dbg.enterDecision(1, decisionCanBacktrack[1]);
 
 				int LA1_0 = input.LA(1);
-				if ( (LA1_0==4) ) {
+				if ( (LA1_0==5) ) {
 					alt1=1;
 				}
 
@@ -214,7 +216,7 @@ public class scrawlParser extends DebugParser {
 			}
 			} finally {dbg.exitSubRule(1);}
 			dbg.location(15,25);
-			match(input,7,FOLLOW_7_in_block42); 
+			match(input,8,FOLLOW_8_in_block42); 
 			}
 
 		}
@@ -240,21 +242,24 @@ public class scrawlParser extends DebugParser {
 
 
 	// $ANTLR start "statement"
-	// /home/bardia/scrawl/scrawl.g:16:1: statement : ';' ;
+	// /home/bardia/scrawl/scrawl.g:17:1: statement : inSt ;
 	public final void statement() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "statement");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(16, 0);
+		dbg.location(17, 0);
 
 		try {
-			// /home/bardia/scrawl/scrawl.g:17:2: ( ';' )
+			// /home/bardia/scrawl/scrawl.g:18:2: ( inSt )
 			dbg.enterAlt(1);
 
-			// /home/bardia/scrawl/scrawl.g:17:4: ';'
+			// /home/bardia/scrawl/scrawl.g:18:4: inSt
 			{
-			dbg.location(17,4);
-			match(input,4,FOLLOW_4_in_statement50); 
+			dbg.location(18,4);
+			pushFollow(FOLLOW_inSt_in_statement51);
+			inSt();
+			state._fsp--;
+
 			}
 
 		}
@@ -265,7 +270,7 @@ public class scrawlParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(17, 6);
+		dbg.location(18, 7);
 
 		}
 		finally {
@@ -277,15 +282,71 @@ public class scrawlParser extends DebugParser {
 	}
 	// $ANTLR end "statement"
 
+
+
+	// $ANTLR start "inSt"
+	// /home/bardia/scrawl/scrawl.g:20:1: inSt : 'in' ( PATH ) block ;
+	public final void inSt() throws RecognitionException {
+		try { dbg.enterRule(getGrammarFileName(), "inSt");
+		if ( getRuleLevel()==0 ) {dbg.commence();}
+		incRuleLevel();
+		dbg.location(20, 0);
+
+		try {
+			// /home/bardia/scrawl/scrawl.g:20:6: ( 'in' ( PATH ) block )
+			dbg.enterAlt(1);
+
+			// /home/bardia/scrawl/scrawl.g:20:8: 'in' ( PATH ) block
+			{
+			dbg.location(20,8);
+			match(input,5,FOLLOW_5_in_inSt60); dbg.location(20,13);
+			// /home/bardia/scrawl/scrawl.g:20:13: ( PATH )
+			dbg.enterAlt(1);
+
+			// /home/bardia/scrawl/scrawl.g:20:14: PATH
+			{
+			dbg.location(20,14);
+			match(input,PATH,FOLLOW_PATH_in_inSt63); 
+			}
+			dbg.location(20,20);
+			pushFollow(FOLLOW_block_in_inSt66);
+			block();
+			state._fsp--;
+
+			}
+
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		dbg.location(20, 24);
+
+		}
+		finally {
+			dbg.exitRule(getGrammarFileName(), "inSt");
+			decRuleLevel();
+			if ( getRuleLevel()==0 ) {dbg.terminate();}
+		}
+
+	}
+	// $ANTLR end "inSt"
+
 	// Delegated rules
 
 
 
 	public static final BitSet FOLLOW_mainRoutine_in_code16 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_5_in_mainRoutine25 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_6_in_mainRoutine25 = new BitSet(new long[]{0x0000000000000080L});
 	public static final BitSet FOLLOW_block_in_mainRoutine27 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_6_in_block36 = new BitSet(new long[]{0x0000000000000090L});
-	public static final BitSet FOLLOW_statement_in_block38 = new BitSet(new long[]{0x0000000000000090L});
-	public static final BitSet FOLLOW_7_in_block42 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_4_in_statement50 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_7_in_block36 = new BitSet(new long[]{0x0000000000000120L});
+	public static final BitSet FOLLOW_statement_in_block38 = new BitSet(new long[]{0x0000000000000120L});
+	public static final BitSet FOLLOW_8_in_block42 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_inSt_in_statement51 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_5_in_inSt60 = new BitSet(new long[]{0x0000000000000010L});
+	public static final BitSet FOLLOW_PATH_in_inSt63 = new BitSet(new long[]{0x0000000000000080L});
+	public static final BitSet FOLLOW_block_in_inSt66 = new BitSet(new long[]{0x0000000000000002L});
 }
