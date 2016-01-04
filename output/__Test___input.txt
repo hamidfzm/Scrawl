@@ -8,4 +8,5 @@ parse first t by getUserInfo;
 
 procedure getUserInfo{
 ta = (DIV.P)@text;
+print ta;
 }

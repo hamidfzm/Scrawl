@@ -1,27 +1,25 @@
 grammar scrawl;
 
 
-@members{
-	int temp=0;
-	int label=0;
-	List vals;	
-}
-
 code	:	mainRoutine procedure*;
 
 procedure
 	:	'procedure' ID block;
 	
 mainRoutine
-	:	'main' block;
+	:	'main' {System.out.println("int main()");}
+		 block;
 	
-block	:	'{' statement*  '}';
+block	:	'{'	 {System.out.println("{");}
+		 statement* 
+		  '}'  {System.out.println("}");};
 
 statement
 	:	inSt
 	|	parseSt
 	|	assSt
-	|	foreachSt;
+	|	foreachSt
+	|	printSt;
 	
 inSt	:	'in' (STRING) block;
 
@@ -31,7 +29,10 @@ foreachSt
 	:	'foreach' selector block;
 	
 parseSt	:	'parse' 'first' exp 'by' ID ';'
-	|	'parse' 'last' exp 'by' ID ';';
+	|	'parse' 'last' exp 'by' ID ';'
+	|	'parse' 'now' exp 'by' ID ';';
+	
+printSt	:	'print' exp ';' ;
 
 exp	:	ID
 	|	STRING
@@ -42,6 +43,13 @@ selector	:
 		
 xPath	:	TAG('['NUMBER']')?('.'TAG('['NUMBER']')?)*;
 
+WS  :   ( ' '
+        | '\t'
+        | '\r'
+        | '\n'
+        ) {$channel=HIDDEN;}
+    ;
+
 STRING	:	 '"' .* '"';
 
 ID	:	 ('a'..'z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
@@ -49,4 +57,6 @@ ID	:	 ('a'..'z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 TAG	:	('A'..'Z')+;
 
 NUMBER	:	'1'..'9' '0'..'9'+ ;
+
+
 
