@@ -1,4 +1,4 @@
-// $ANTLR 3.5.1 /home/bardia/scrawl/scrawl.g 2016-01-04 22:20:47
+// $ANTLR 3.5.1 /home/bardia/scrawl/scrawl.g 2016-01-14 16:56:13
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -464,8 +464,8 @@ public class scrawlLexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/scrawl.g:46:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-			// /home/bardia/scrawl/scrawl.g:46:9: ( ' ' | '\\t' | '\\r' | '\\n' )
+			// /home/bardia/scrawl/scrawl.g:62:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+			// /home/bardia/scrawl/scrawl.g:62:9: ( ' ' | '\\t' | '\\r' | '\\n' )
 			{
 			if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
 				input.consume();
@@ -492,11 +492,11 @@ public class scrawlLexer extends Lexer {
 		try {
 			int _type = STRING;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/scrawl.g:53:8: ( '\"' ( . )* '\"' )
-			// /home/bardia/scrawl/scrawl.g:53:11: '\"' ( . )* '\"'
+			// /home/bardia/scrawl/scrawl.g:69:8: ( '\"' ( . )* '\"' )
+			// /home/bardia/scrawl/scrawl.g:69:11: '\"' ( . )* '\"'
 			{
 			match('\"'); 
-			// /home/bardia/scrawl/scrawl.g:53:15: ( . )*
+			// /home/bardia/scrawl/scrawl.g:69:15: ( . )*
 			loop1:
 			while (true) {
 				int alt1=2;
@@ -510,7 +510,7 @@ public class scrawlLexer extends Lexer {
 
 				switch (alt1) {
 				case 1 :
-					// /home/bardia/scrawl/scrawl.g:53:15: .
+					// /home/bardia/scrawl/scrawl.g:69:15: .
 					{
 					matchAny(); 
 					}
@@ -538,8 +538,8 @@ public class scrawlLexer extends Lexer {
 		try {
 			int _type = ID;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/scrawl.g:55:4: ( ( 'a' .. 'z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-			// /home/bardia/scrawl/scrawl.g:55:7: ( 'a' .. 'z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+			// /home/bardia/scrawl/scrawl.g:71:4: ( ( 'a' .. 'z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+			// /home/bardia/scrawl/scrawl.g:71:7: ( 'a' .. 'z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
 			{
 			if ( input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 				input.consume();
@@ -549,79 +549,15 @@ public class scrawlLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// /home/bardia/scrawl/scrawl.g:55:22: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+			// /home/bardia/scrawl/scrawl.g:71:22: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
 			loop2:
 			while (true) {
 				int alt2=2;
-				switch ( input.LA(1) ) {
-				case '0':
-				case '1':
-				case '2':
-				case '3':
-				case '4':
-				case '5':
-				case '6':
-				case '7':
-				case '8':
-				case '9':
-				case 'A':
-				case 'B':
-				case 'C':
-				case 'D':
-				case 'E':
-				case 'F':
-				case 'G':
-				case 'H':
-				case 'I':
-				case 'J':
-				case 'K':
-				case 'L':
-				case 'M':
-				case 'N':
-				case 'O':
-				case 'P':
-				case 'Q':
-				case 'R':
-				case 'S':
-				case 'T':
-				case 'U':
-				case 'V':
-				case 'W':
-				case 'X':
-				case 'Y':
-				case 'Z':
-				case '_':
-				case 'a':
-				case 'b':
-				case 'c':
-				case 'd':
-				case 'e':
-				case 'f':
-				case 'g':
-				case 'h':
-				case 'i':
-				case 'j':
-				case 'k':
-				case 'l':
-				case 'm':
-				case 'n':
-				case 'o':
-				case 'p':
-				case 'q':
-				case 'r':
-				case 's':
-				case 't':
-				case 'u':
-				case 'v':
-				case 'w':
-				case 'x':
-				case 'y':
-				case 'z':
-					{
+				int LA2_0 = input.LA(1);
+				if ( ((LA2_0 >= '0' && LA2_0 <= '9')||(LA2_0 >= 'A' && LA2_0 <= 'Z')||LA2_0=='_'||(LA2_0 >= 'a' && LA2_0 <= 'z')) ) {
 					alt2=1;
-					}
-					break;
 				}
+
 				switch (alt2) {
 				case 1 :
 					// /home/bardia/scrawl/scrawl.g:
@@ -658,46 +594,19 @@ public class scrawlLexer extends Lexer {
 		try {
 			int _type = TAG;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/scrawl.g:57:5: ( ( 'A' .. 'Z' )+ )
-			// /home/bardia/scrawl/scrawl.g:57:7: ( 'A' .. 'Z' )+
+			// /home/bardia/scrawl/scrawl.g:73:5: ( ( 'A' .. 'Z' )+ )
+			// /home/bardia/scrawl/scrawl.g:73:7: ( 'A' .. 'Z' )+
 			{
-			// /home/bardia/scrawl/scrawl.g:57:7: ( 'A' .. 'Z' )+
+			// /home/bardia/scrawl/scrawl.g:73:7: ( 'A' .. 'Z' )+
 			int cnt3=0;
 			loop3:
 			while (true) {
 				int alt3=2;
-				switch ( input.LA(1) ) {
-				case 'A':
-				case 'B':
-				case 'C':
-				case 'D':
-				case 'E':
-				case 'F':
-				case 'G':
-				case 'H':
-				case 'I':
-				case 'J':
-				case 'K':
-				case 'L':
-				case 'M':
-				case 'N':
-				case 'O':
-				case 'P':
-				case 'Q':
-				case 'R':
-				case 'S':
-				case 'T':
-				case 'U':
-				case 'V':
-				case 'W':
-				case 'X':
-				case 'Y':
-				case 'Z':
-					{
+				int LA3_0 = input.LA(1);
+				if ( ((LA3_0 >= 'A' && LA3_0 <= 'Z')) ) {
 					alt3=1;
-					}
-					break;
 				}
+
 				switch (alt3) {
 				case 1 :
 					// /home/bardia/scrawl/scrawl.g:
@@ -737,31 +646,20 @@ public class scrawlLexer extends Lexer {
 		try {
 			int _type = NUMBER;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/scrawl.g:59:8: ( '1' .. '9' ( '0' .. '9' )+ )
-			// /home/bardia/scrawl/scrawl.g:59:10: '1' .. '9' ( '0' .. '9' )+
+			// /home/bardia/scrawl/scrawl.g:75:8: ( '1' .. '9' ( '0' .. '9' )+ )
+			// /home/bardia/scrawl/scrawl.g:75:10: '1' .. '9' ( '0' .. '9' )+
 			{
 			matchRange('1','9'); 
-			// /home/bardia/scrawl/scrawl.g:59:19: ( '0' .. '9' )+
+			// /home/bardia/scrawl/scrawl.g:75:19: ( '0' .. '9' )+
 			int cnt4=0;
 			loop4:
 			while (true) {
 				int alt4=2;
-				switch ( input.LA(1) ) {
-				case '0':
-				case '1':
-				case '2':
-				case '3':
-				case '4':
-				case '5':
-				case '6':
-				case '7':
-				case '8':
-				case '9':
-					{
+				int LA4_0 = input.LA(1);
+				if ( ((LA4_0 >= '0' && LA4_0 <= '9')) ) {
 					alt4=1;
-					}
-					break;
 				}
+
 				switch (alt4) {
 				case 1 :
 					// /home/bardia/scrawl/scrawl.g:
@@ -800,1148 +698,7 @@ public class scrawlLexer extends Lexer {
 	public void mTokens() throws RecognitionException {
 		// /home/bardia/scrawl/scrawl.g:1:8: ( T__9 | T__10 | T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | WS | STRING | ID | TAG | NUMBER )
 		int alt5=25;
-		switch ( input.LA(1) ) {
-		case '(':
-			{
-			alt5=1;
-			}
-			break;
-		case ')':
-			{
-			alt5=2;
-			}
-			break;
-		case '.':
-			{
-			alt5=3;
-			}
-			break;
-		case ';':
-			{
-			alt5=4;
-			}
-			break;
-		case '=':
-			{
-			alt5=5;
-			}
-			break;
-		case '@':
-			{
-			alt5=6;
-			}
-			break;
-		case '[':
-			{
-			alt5=7;
-			}
-			break;
-		case ']':
-			{
-			alt5=8;
-			}
-			break;
-		case 'b':
-			{
-			switch ( input.LA(2) ) {
-			case 'y':
-				{
-				switch ( input.LA(3) ) {
-				case '0':
-				case '1':
-				case '2':
-				case '3':
-				case '4':
-				case '5':
-				case '6':
-				case '7':
-				case '8':
-				case '9':
-				case 'A':
-				case 'B':
-				case 'C':
-				case 'D':
-				case 'E':
-				case 'F':
-				case 'G':
-				case 'H':
-				case 'I':
-				case 'J':
-				case 'K':
-				case 'L':
-				case 'M':
-				case 'N':
-				case 'O':
-				case 'P':
-				case 'Q':
-				case 'R':
-				case 'S':
-				case 'T':
-				case 'U':
-				case 'V':
-				case 'W':
-				case 'X':
-				case 'Y':
-				case 'Z':
-				case '_':
-				case 'a':
-				case 'b':
-				case 'c':
-				case 'd':
-				case 'e':
-				case 'f':
-				case 'g':
-				case 'h':
-				case 'i':
-				case 'j':
-				case 'k':
-				case 'l':
-				case 'm':
-				case 'n':
-				case 'o':
-				case 'p':
-				case 'q':
-				case 'r':
-				case 's':
-				case 't':
-				case 'u':
-				case 'v':
-				case 'w':
-				case 'x':
-				case 'y':
-				case 'z':
-					{
-					alt5=23;
-					}
-					break;
-				default:
-					alt5=9;
-				}
-				}
-				break;
-			default:
-				alt5=23;
-			}
-			}
-			break;
-		case 'f':
-			{
-			switch ( input.LA(2) ) {
-			case 'i':
-				{
-				switch ( input.LA(3) ) {
-				case 'r':
-					{
-					switch ( input.LA(4) ) {
-					case 's':
-						{
-						switch ( input.LA(5) ) {
-						case 't':
-							{
-							switch ( input.LA(6) ) {
-							case '0':
-							case '1':
-							case '2':
-							case '3':
-							case '4':
-							case '5':
-							case '6':
-							case '7':
-							case '8':
-							case '9':
-							case 'A':
-							case 'B':
-							case 'C':
-							case 'D':
-							case 'E':
-							case 'F':
-							case 'G':
-							case 'H':
-							case 'I':
-							case 'J':
-							case 'K':
-							case 'L':
-							case 'M':
-							case 'N':
-							case 'O':
-							case 'P':
-							case 'Q':
-							case 'R':
-							case 'S':
-							case 'T':
-							case 'U':
-							case 'V':
-							case 'W':
-							case 'X':
-							case 'Y':
-							case 'Z':
-							case '_':
-							case 'a':
-							case 'b':
-							case 'c':
-							case 'd':
-							case 'e':
-							case 'f':
-							case 'g':
-							case 'h':
-							case 'i':
-							case 'j':
-							case 'k':
-							case 'l':
-							case 'm':
-							case 'n':
-							case 'o':
-							case 'p':
-							case 'q':
-							case 'r':
-							case 's':
-							case 't':
-							case 'u':
-							case 'v':
-							case 'w':
-							case 'x':
-							case 'y':
-							case 'z':
-								{
-								alt5=23;
-								}
-								break;
-							default:
-								alt5=10;
-							}
-							}
-							break;
-						default:
-							alt5=23;
-						}
-						}
-						break;
-					default:
-						alt5=23;
-					}
-					}
-					break;
-				default:
-					alt5=23;
-				}
-				}
-				break;
-			case 'o':
-				{
-				switch ( input.LA(3) ) {
-				case 'r':
-					{
-					switch ( input.LA(4) ) {
-					case 'e':
-						{
-						switch ( input.LA(5) ) {
-						case 'a':
-							{
-							switch ( input.LA(6) ) {
-							case 'c':
-								{
-								switch ( input.LA(7) ) {
-								case 'h':
-									{
-									switch ( input.LA(8) ) {
-									case '0':
-									case '1':
-									case '2':
-									case '3':
-									case '4':
-									case '5':
-									case '6':
-									case '7':
-									case '8':
-									case '9':
-									case 'A':
-									case 'B':
-									case 'C':
-									case 'D':
-									case 'E':
-									case 'F':
-									case 'G':
-									case 'H':
-									case 'I':
-									case 'J':
-									case 'K':
-									case 'L':
-									case 'M':
-									case 'N':
-									case 'O':
-									case 'P':
-									case 'Q':
-									case 'R':
-									case 'S':
-									case 'T':
-									case 'U':
-									case 'V':
-									case 'W':
-									case 'X':
-									case 'Y':
-									case 'Z':
-									case '_':
-									case 'a':
-									case 'b':
-									case 'c':
-									case 'd':
-									case 'e':
-									case 'f':
-									case 'g':
-									case 'h':
-									case 'i':
-									case 'j':
-									case 'k':
-									case 'l':
-									case 'm':
-									case 'n':
-									case 'o':
-									case 'p':
-									case 'q':
-									case 'r':
-									case 's':
-									case 't':
-									case 'u':
-									case 'v':
-									case 'w':
-									case 'x':
-									case 'y':
-									case 'z':
-										{
-										alt5=23;
-										}
-										break;
-									default:
-										alt5=11;
-									}
-									}
-									break;
-								default:
-									alt5=23;
-								}
-								}
-								break;
-							default:
-								alt5=23;
-							}
-							}
-							break;
-						default:
-							alt5=23;
-						}
-						}
-						break;
-					default:
-						alt5=23;
-					}
-					}
-					break;
-				default:
-					alt5=23;
-				}
-				}
-				break;
-			default:
-				alt5=23;
-			}
-			}
-			break;
-		case 'i':
-			{
-			switch ( input.LA(2) ) {
-			case 'n':
-				{
-				switch ( input.LA(3) ) {
-				case '0':
-				case '1':
-				case '2':
-				case '3':
-				case '4':
-				case '5':
-				case '6':
-				case '7':
-				case '8':
-				case '9':
-				case 'A':
-				case 'B':
-				case 'C':
-				case 'D':
-				case 'E':
-				case 'F':
-				case 'G':
-				case 'H':
-				case 'I':
-				case 'J':
-				case 'K':
-				case 'L':
-				case 'M':
-				case 'N':
-				case 'O':
-				case 'P':
-				case 'Q':
-				case 'R':
-				case 'S':
-				case 'T':
-				case 'U':
-				case 'V':
-				case 'W':
-				case 'X':
-				case 'Y':
-				case 'Z':
-				case '_':
-				case 'a':
-				case 'b':
-				case 'c':
-				case 'd':
-				case 'e':
-				case 'f':
-				case 'g':
-				case 'h':
-				case 'i':
-				case 'j':
-				case 'k':
-				case 'l':
-				case 'm':
-				case 'n':
-				case 'o':
-				case 'p':
-				case 'q':
-				case 'r':
-				case 's':
-				case 't':
-				case 'u':
-				case 'v':
-				case 'w':
-				case 'x':
-				case 'y':
-				case 'z':
-					{
-					alt5=23;
-					}
-					break;
-				default:
-					alt5=12;
-				}
-				}
-				break;
-			default:
-				alt5=23;
-			}
-			}
-			break;
-		case 'l':
-			{
-			switch ( input.LA(2) ) {
-			case 'a':
-				{
-				switch ( input.LA(3) ) {
-				case 's':
-					{
-					switch ( input.LA(4) ) {
-					case 't':
-						{
-						switch ( input.LA(5) ) {
-						case '0':
-						case '1':
-						case '2':
-						case '3':
-						case '4':
-						case '5':
-						case '6':
-						case '7':
-						case '8':
-						case '9':
-						case 'A':
-						case 'B':
-						case 'C':
-						case 'D':
-						case 'E':
-						case 'F':
-						case 'G':
-						case 'H':
-						case 'I':
-						case 'J':
-						case 'K':
-						case 'L':
-						case 'M':
-						case 'N':
-						case 'O':
-						case 'P':
-						case 'Q':
-						case 'R':
-						case 'S':
-						case 'T':
-						case 'U':
-						case 'V':
-						case 'W':
-						case 'X':
-						case 'Y':
-						case 'Z':
-						case '_':
-						case 'a':
-						case 'b':
-						case 'c':
-						case 'd':
-						case 'e':
-						case 'f':
-						case 'g':
-						case 'h':
-						case 'i':
-						case 'j':
-						case 'k':
-						case 'l':
-						case 'm':
-						case 'n':
-						case 'o':
-						case 'p':
-						case 'q':
-						case 'r':
-						case 's':
-						case 't':
-						case 'u':
-						case 'v':
-						case 'w':
-						case 'x':
-						case 'y':
-						case 'z':
-							{
-							alt5=23;
-							}
-							break;
-						default:
-							alt5=13;
-						}
-						}
-						break;
-					default:
-						alt5=23;
-					}
-					}
-					break;
-				default:
-					alt5=23;
-				}
-				}
-				break;
-			default:
-				alt5=23;
-			}
-			}
-			break;
-		case 'm':
-			{
-			switch ( input.LA(2) ) {
-			case 'a':
-				{
-				switch ( input.LA(3) ) {
-				case 'i':
-					{
-					switch ( input.LA(4) ) {
-					case 'n':
-						{
-						switch ( input.LA(5) ) {
-						case '0':
-						case '1':
-						case '2':
-						case '3':
-						case '4':
-						case '5':
-						case '6':
-						case '7':
-						case '8':
-						case '9':
-						case 'A':
-						case 'B':
-						case 'C':
-						case 'D':
-						case 'E':
-						case 'F':
-						case 'G':
-						case 'H':
-						case 'I':
-						case 'J':
-						case 'K':
-						case 'L':
-						case 'M':
-						case 'N':
-						case 'O':
-						case 'P':
-						case 'Q':
-						case 'R':
-						case 'S':
-						case 'T':
-						case 'U':
-						case 'V':
-						case 'W':
-						case 'X':
-						case 'Y':
-						case 'Z':
-						case '_':
-						case 'a':
-						case 'b':
-						case 'c':
-						case 'd':
-						case 'e':
-						case 'f':
-						case 'g':
-						case 'h':
-						case 'i':
-						case 'j':
-						case 'k':
-						case 'l':
-						case 'm':
-						case 'n':
-						case 'o':
-						case 'p':
-						case 'q':
-						case 'r':
-						case 's':
-						case 't':
-						case 'u':
-						case 'v':
-						case 'w':
-						case 'x':
-						case 'y':
-						case 'z':
-							{
-							alt5=23;
-							}
-							break;
-						default:
-							alt5=14;
-						}
-						}
-						break;
-					default:
-						alt5=23;
-					}
-					}
-					break;
-				default:
-					alt5=23;
-				}
-				}
-				break;
-			default:
-				alt5=23;
-			}
-			}
-			break;
-		case 'n':
-			{
-			switch ( input.LA(2) ) {
-			case 'o':
-				{
-				switch ( input.LA(3) ) {
-				case 'w':
-					{
-					switch ( input.LA(4) ) {
-					case '0':
-					case '1':
-					case '2':
-					case '3':
-					case '4':
-					case '5':
-					case '6':
-					case '7':
-					case '8':
-					case '9':
-					case 'A':
-					case 'B':
-					case 'C':
-					case 'D':
-					case 'E':
-					case 'F':
-					case 'G':
-					case 'H':
-					case 'I':
-					case 'J':
-					case 'K':
-					case 'L':
-					case 'M':
-					case 'N':
-					case 'O':
-					case 'P':
-					case 'Q':
-					case 'R':
-					case 'S':
-					case 'T':
-					case 'U':
-					case 'V':
-					case 'W':
-					case 'X':
-					case 'Y':
-					case 'Z':
-					case '_':
-					case 'a':
-					case 'b':
-					case 'c':
-					case 'd':
-					case 'e':
-					case 'f':
-					case 'g':
-					case 'h':
-					case 'i':
-					case 'j':
-					case 'k':
-					case 'l':
-					case 'm':
-					case 'n':
-					case 'o':
-					case 'p':
-					case 'q':
-					case 'r':
-					case 's':
-					case 't':
-					case 'u':
-					case 'v':
-					case 'w':
-					case 'x':
-					case 'y':
-					case 'z':
-						{
-						alt5=23;
-						}
-						break;
-					default:
-						alt5=15;
-					}
-					}
-					break;
-				default:
-					alt5=23;
-				}
-				}
-				break;
-			default:
-				alt5=23;
-			}
-			}
-			break;
-		case 'p':
-			{
-			switch ( input.LA(2) ) {
-			case 'a':
-				{
-				switch ( input.LA(3) ) {
-				case 'r':
-					{
-					switch ( input.LA(4) ) {
-					case 's':
-						{
-						switch ( input.LA(5) ) {
-						case 'e':
-							{
-							switch ( input.LA(6) ) {
-							case '0':
-							case '1':
-							case '2':
-							case '3':
-							case '4':
-							case '5':
-							case '6':
-							case '7':
-							case '8':
-							case '9':
-							case 'A':
-							case 'B':
-							case 'C':
-							case 'D':
-							case 'E':
-							case 'F':
-							case 'G':
-							case 'H':
-							case 'I':
-							case 'J':
-							case 'K':
-							case 'L':
-							case 'M':
-							case 'N':
-							case 'O':
-							case 'P':
-							case 'Q':
-							case 'R':
-							case 'S':
-							case 'T':
-							case 'U':
-							case 'V':
-							case 'W':
-							case 'X':
-							case 'Y':
-							case 'Z':
-							case '_':
-							case 'a':
-							case 'b':
-							case 'c':
-							case 'd':
-							case 'e':
-							case 'f':
-							case 'g':
-							case 'h':
-							case 'i':
-							case 'j':
-							case 'k':
-							case 'l':
-							case 'm':
-							case 'n':
-							case 'o':
-							case 'p':
-							case 'q':
-							case 'r':
-							case 's':
-							case 't':
-							case 'u':
-							case 'v':
-							case 'w':
-							case 'x':
-							case 'y':
-							case 'z':
-								{
-								alt5=23;
-								}
-								break;
-							default:
-								alt5=16;
-							}
-							}
-							break;
-						default:
-							alt5=23;
-						}
-						}
-						break;
-					default:
-						alt5=23;
-					}
-					}
-					break;
-				default:
-					alt5=23;
-				}
-				}
-				break;
-			case 'r':
-				{
-				switch ( input.LA(3) ) {
-				case 'i':
-					{
-					switch ( input.LA(4) ) {
-					case 'n':
-						{
-						switch ( input.LA(5) ) {
-						case 't':
-							{
-							switch ( input.LA(6) ) {
-							case '0':
-							case '1':
-							case '2':
-							case '3':
-							case '4':
-							case '5':
-							case '6':
-							case '7':
-							case '8':
-							case '9':
-							case 'A':
-							case 'B':
-							case 'C':
-							case 'D':
-							case 'E':
-							case 'F':
-							case 'G':
-							case 'H':
-							case 'I':
-							case 'J':
-							case 'K':
-							case 'L':
-							case 'M':
-							case 'N':
-							case 'O':
-							case 'P':
-							case 'Q':
-							case 'R':
-							case 'S':
-							case 'T':
-							case 'U':
-							case 'V':
-							case 'W':
-							case 'X':
-							case 'Y':
-							case 'Z':
-							case '_':
-							case 'a':
-							case 'b':
-							case 'c':
-							case 'd':
-							case 'e':
-							case 'f':
-							case 'g':
-							case 'h':
-							case 'i':
-							case 'j':
-							case 'k':
-							case 'l':
-							case 'm':
-							case 'n':
-							case 'o':
-							case 'p':
-							case 'q':
-							case 'r':
-							case 's':
-							case 't':
-							case 'u':
-							case 'v':
-							case 'w':
-							case 'x':
-							case 'y':
-							case 'z':
-								{
-								alt5=23;
-								}
-								break;
-							default:
-								alt5=17;
-							}
-							}
-							break;
-						default:
-							alt5=23;
-						}
-						}
-						break;
-					default:
-						alt5=23;
-					}
-					}
-					break;
-				case 'o':
-					{
-					switch ( input.LA(4) ) {
-					case 'c':
-						{
-						switch ( input.LA(5) ) {
-						case 'e':
-							{
-							switch ( input.LA(6) ) {
-							case 'd':
-								{
-								switch ( input.LA(7) ) {
-								case 'u':
-									{
-									switch ( input.LA(8) ) {
-									case 'r':
-										{
-										switch ( input.LA(9) ) {
-										case 'e':
-											{
-											switch ( input.LA(10) ) {
-											case '0':
-											case '1':
-											case '2':
-											case '3':
-											case '4':
-											case '5':
-											case '6':
-											case '7':
-											case '8':
-											case '9':
-											case 'A':
-											case 'B':
-											case 'C':
-											case 'D':
-											case 'E':
-											case 'F':
-											case 'G':
-											case 'H':
-											case 'I':
-											case 'J':
-											case 'K':
-											case 'L':
-											case 'M':
-											case 'N':
-											case 'O':
-											case 'P':
-											case 'Q':
-											case 'R':
-											case 'S':
-											case 'T':
-											case 'U':
-											case 'V':
-											case 'W':
-											case 'X':
-											case 'Y':
-											case 'Z':
-											case '_':
-											case 'a':
-											case 'b':
-											case 'c':
-											case 'd':
-											case 'e':
-											case 'f':
-											case 'g':
-											case 'h':
-											case 'i':
-											case 'j':
-											case 'k':
-											case 'l':
-											case 'm':
-											case 'n':
-											case 'o':
-											case 'p':
-											case 'q':
-											case 'r':
-											case 's':
-											case 't':
-											case 'u':
-											case 'v':
-											case 'w':
-											case 'x':
-											case 'y':
-											case 'z':
-												{
-												alt5=23;
-												}
-												break;
-											default:
-												alt5=18;
-											}
-											}
-											break;
-										default:
-											alt5=23;
-										}
-										}
-										break;
-									default:
-										alt5=23;
-									}
-									}
-									break;
-								default:
-									alt5=23;
-								}
-								}
-								break;
-							default:
-								alt5=23;
-							}
-							}
-							break;
-						default:
-							alt5=23;
-						}
-						}
-						break;
-					default:
-						alt5=23;
-					}
-					}
-					break;
-				default:
-					alt5=23;
-				}
-				}
-				break;
-			default:
-				alt5=23;
-			}
-			}
-			break;
-		case '{':
-			{
-			alt5=19;
-			}
-			break;
-		case '}':
-			{
-			alt5=20;
-			}
-			break;
-		case '\t':
-		case '\n':
-		case '\r':
-		case ' ':
-			{
-			alt5=21;
-			}
-			break;
-		case '\"':
-			{
-			alt5=22;
-			}
-			break;
-		case '_':
-		case 'a':
-		case 'c':
-		case 'd':
-		case 'e':
-		case 'g':
-		case 'h':
-		case 'j':
-		case 'k':
-		case 'o':
-		case 'q':
-		case 'r':
-		case 's':
-		case 't':
-		case 'u':
-		case 'v':
-		case 'w':
-		case 'x':
-		case 'y':
-		case 'z':
-			{
-			alt5=23;
-			}
-			break;
-		case 'A':
-		case 'B':
-		case 'C':
-		case 'D':
-		case 'E':
-		case 'F':
-		case 'G':
-		case 'H':
-		case 'I':
-		case 'J':
-		case 'K':
-		case 'L':
-		case 'M':
-		case 'N':
-		case 'O':
-		case 'P':
-		case 'Q':
-		case 'R':
-		case 'S':
-		case 'T':
-		case 'U':
-		case 'V':
-		case 'W':
-		case 'X':
-		case 'Y':
-		case 'Z':
-			{
-			alt5=24;
-			}
-			break;
-		case '1':
-		case '2':
-		case '3':
-		case '4':
-		case '5':
-		case '6':
-		case '7':
-		case '8':
-		case '9':
-			{
-			alt5=25;
-			}
-			break;
-		default:
-			NoViableAltException nvae =
-				new NoViableAltException("", 5, 0, input);
-			throw nvae;
-		}
+		alt5 = dfa5.predict(input);
 		switch (alt5) {
 			case 1 :
 				// /home/bardia/scrawl/scrawl.g:1:10: T__9
@@ -2123,5 +880,138 @@ public class scrawlLexer extends Lexer {
 	}
 
 
+	protected DFA5 dfa5 = new DFA5(this);
+	static final String DFA5_eotS =
+		"\11\uffff\7\24\7\uffff\1\40\2\24\1\43\5\24\1\uffff\2\24\1\uffff\2\24\1"+
+		"\56\5\24\1\64\1\65\1\uffff\3\24\1\71\1\24\2\uffff\1\73\1\74\1\24\1\uffff"+
+		"\1\24\2\uffff\1\24\1\100\1\24\1\uffff\1\24\1\103\1\uffff";
+	static final String DFA5_eofS =
+		"\104\uffff";
+	static final String DFA5_minS =
+		"\1\11\10\uffff\1\171\1\151\1\156\2\141\1\157\1\141\7\uffff\1\60\2\162"+
+		"\1\60\1\163\1\151\1\167\1\162\1\151\1\uffff\1\163\1\145\1\uffff\1\164"+
+		"\1\156\1\60\1\163\1\156\1\143\1\164\1\141\2\60\1\uffff\1\145\1\164\1\145"+
+		"\1\60\1\143\2\uffff\2\60\1\144\1\uffff\1\150\2\uffff\1\165\1\60\1\162"+
+		"\1\uffff\1\145\1\60\1\uffff";
+	static final String DFA5_maxS =
+		"\1\175\10\uffff\1\171\1\157\1\156\2\141\1\157\1\162\7\uffff\1\172\2\162"+
+		"\1\172\1\163\1\151\1\167\1\162\1\157\1\uffff\1\163\1\145\1\uffff\1\164"+
+		"\1\156\1\172\1\163\1\156\1\143\1\164\1\141\2\172\1\uffff\1\145\1\164\1"+
+		"\145\1\172\1\143\2\uffff\2\172\1\144\1\uffff\1\150\2\uffff\1\165\1\172"+
+		"\1\162\1\uffff\1\145\1\172\1\uffff";
+	static final String DFA5_acceptS =
+		"\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\7\uffff\1\23\1\24\1\25\1\26"+
+		"\1\27\1\30\1\31\11\uffff\1\11\2\uffff\1\14\12\uffff\1\17\5\uffff\1\15"+
+		"\1\16\3\uffff\1\12\1\uffff\1\20\1\21\3\uffff\1\13\2\uffff\1\22";
+	static final String DFA5_specialS =
+		"\104\uffff}>";
+	static final String[] DFA5_transitionS = {
+			"\2\22\2\uffff\1\22\22\uffff\1\22\1\uffff\1\23\5\uffff\1\1\1\2\4\uffff"+
+			"\1\3\2\uffff\11\26\1\uffff\1\4\1\uffff\1\5\2\uffff\1\6\32\25\1\7\1\uffff"+
+			"\1\10\1\uffff\1\24\1\uffff\1\24\1\11\3\24\1\12\2\24\1\13\2\24\1\14\1"+
+			"\15\1\16\1\24\1\17\12\24\1\20\1\uffff\1\21",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"\1\27",
+			"\1\30\5\uffff\1\31",
+			"\1\32",
+			"\1\33",
+			"\1\34",
+			"\1\35",
+			"\1\36\20\uffff\1\37",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"\12\24\7\uffff\32\24\4\uffff\1\24\1\uffff\32\24",
+			"\1\41",
+			"\1\42",
+			"\12\24\7\uffff\32\24\4\uffff\1\24\1\uffff\32\24",
+			"\1\44",
+			"\1\45",
+			"\1\46",
+			"\1\47",
+			"\1\50\5\uffff\1\51",
+			"",
+			"\1\52",
+			"\1\53",
+			"",
+			"\1\54",
+			"\1\55",
+			"\12\24\7\uffff\32\24\4\uffff\1\24\1\uffff\32\24",
+			"\1\57",
+			"\1\60",
+			"\1\61",
+			"\1\62",
+			"\1\63",
+			"\12\24\7\uffff\32\24\4\uffff\1\24\1\uffff\32\24",
+			"\12\24\7\uffff\32\24\4\uffff\1\24\1\uffff\32\24",
+			"",
+			"\1\66",
+			"\1\67",
+			"\1\70",
+			"\12\24\7\uffff\32\24\4\uffff\1\24\1\uffff\32\24",
+			"\1\72",
+			"",
+			"",
+			"\12\24\7\uffff\32\24\4\uffff\1\24\1\uffff\32\24",
+			"\12\24\7\uffff\32\24\4\uffff\1\24\1\uffff\32\24",
+			"\1\75",
+			"",
+			"\1\76",
+			"",
+			"",
+			"\1\77",
+			"\12\24\7\uffff\32\24\4\uffff\1\24\1\uffff\32\24",
+			"\1\101",
+			"",
+			"\1\102",
+			"\12\24\7\uffff\32\24\4\uffff\1\24\1\uffff\32\24",
+			""
+	};
+
+	static final short[] DFA5_eot = DFA.unpackEncodedString(DFA5_eotS);
+	static final short[] DFA5_eof = DFA.unpackEncodedString(DFA5_eofS);
+	static final char[] DFA5_min = DFA.unpackEncodedStringToUnsignedChars(DFA5_minS);
+	static final char[] DFA5_max = DFA.unpackEncodedStringToUnsignedChars(DFA5_maxS);
+	static final short[] DFA5_accept = DFA.unpackEncodedString(DFA5_acceptS);
+	static final short[] DFA5_special = DFA.unpackEncodedString(DFA5_specialS);
+	static final short[][] DFA5_transition;
+
+	static {
+		int numStates = DFA5_transitionS.length;
+		DFA5_transition = new short[numStates][];
+		for (int i=0; i<numStates; i++) {
+			DFA5_transition[i] = DFA.unpackEncodedString(DFA5_transitionS[i]);
+		}
+	}
+
+	protected class DFA5 extends DFA {
+
+		public DFA5(BaseRecognizer recognizer) {
+			this.recognizer = recognizer;
+			this.decisionNumber = 5;
+			this.eot = DFA5_eot;
+			this.eof = DFA5_eof;
+			this.min = DFA5_min;
+			this.max = DFA5_max;
+			this.accept = DFA5_accept;
+			this.special = DFA5_special;
+			this.transition = DFA5_transition;
+		}
+		@Override
+		public String getDescription() {
+			return "1:1: Tokens : ( T__9 | T__10 | T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | WS | STRING | ID | TAG | NUMBER );";
+		}
+	}
 
 }

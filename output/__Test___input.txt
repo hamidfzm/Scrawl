@@ -1,5 +1,5 @@
 main{
-in "home/bardia/parsehtml"{
+in "http://rishe.co"{
 foreach (DIV.DIV.P){
 parse first t by getUserInfo;
 }

@@ -1,18 +1,30 @@
 grammar scrawl;
 
+@members{
+	int blockNum=0;
+}
 
-code	:	mainRoutine procedure*;
+code	:	{
+			System.out.println("package main");
+			System.out.println("import \"fmt\"");
+			System.out.println("import \"net/http\"");
+		}
+		mainRoutine procedure*;
 
 procedure
-	:	'procedure' ID block;
-	
-mainRoutine
-	:	'main' {System.out.println("int main()");}
+	:	'procedure' ID
+		{
+			System.out.print("func "+$ID.text);
+		}
 		 block;
 	
-block	:	'{'	 {System.out.println("{");}
+mainRoutine
+	:	'main' {System.out.print("func main()");}
+		 block;
+	
+block	:	'{'	 {System.out.println("{"); blockNum+=1;}
 		 statement* 
-		  '}'  {System.out.println("}");};
+		  '}'  {System.out.println("}"); blockNum-=1;};
 
 statement
 	:	inSt
@@ -21,7 +33,11 @@ statement
 	|	foreachSt
 	|	printSt;
 	
-inSt	:	'in' (STRING) block;
+inSt	:	'in' (STRING) {
+				System.out.println("resp"+blockNum+", err"+blockNum+" := http.Get("+$STRING.text+")");
+				System.out.print("if err"+blockNum+" == nil");
+			}
+		block;
 
 assSt	:	ID '=' exp ';';
 
