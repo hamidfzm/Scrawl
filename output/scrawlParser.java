@@ -1,4 +1,7 @@
-// $ANTLR 3.5.1 /home/bardia/scrawl/scrawl.g 2016-01-14 16:56:13
+// $ANTLR 3.5.1 /home/bardia/scrawl/scrawl.g 2016-01-14 20:39:29
+
+	 import java.util.HashMap;
+
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -11,12 +14,11 @@ import java.io.IOException;
 public class scrawlParser extends DebugParser {
 	public static final String[] tokenNames = new String[] {
 		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "ID", "NUMBER", "STRING", "TAG", 
-		"WS", "'('", "')'", "'.'", "';'", "'='", "'@'", "'['", "']'", "'by'", 
-		"'first'", "'foreach'", "'in'", "'last'", "'main'", "'now'", "'parse'", 
+		"THIS", "WS", "'('", "')'", "'.'", "';'", "'='", "'@'", "'['", "']'", 
+		"'by'", "'first'", "'foreach'", "'in'", "'last'", "'main'", "'now'", "'parse'", 
 		"'print'", "'procedure'", "'{'", "'}'"
 	};
 	public static final int EOF=-1;
-	public static final int T__9=9;
 	public static final int T__10=10;
 	public static final int T__11=11;
 	public static final int T__12=12;
@@ -36,11 +38,13 @@ public class scrawlParser extends DebugParser {
 	public static final int T__26=26;
 	public static final int T__27=27;
 	public static final int T__28=28;
+	public static final int T__29=29;
 	public static final int ID=4;
 	public static final int NUMBER=5;
 	public static final int STRING=6;
 	public static final int TAG=7;
-	public static final int WS=8;
+	public static final int THIS=8;
+	public static final int WS=9;
 
 	// delegates
 	public Parser[] getDelegates() {
@@ -51,9 +55,8 @@ public class scrawlParser extends DebugParser {
 
 
 	public static final String[] ruleNames = new String[] {
-		"invalidRule", "block", "xPath", "assSt", "parseSt", "exp", "statement", 
-		"procedure", "foreachSt", "mainRoutine", "code", "selector", "printSt", 
-		"inSt"
+		"invalidRule", "inSt", "procedure", "xPath", "exp", "mainRoutine", "block", 
+		"code", "selector", "assSt", "foreachSt", "printSt", "parseSt", "statement"
 	};
 
 	public static final boolean[] decisionCanBacktrack = new boolean[] {
@@ -96,35 +99,37 @@ public class scrawlParser extends DebugParser {
 	@Override public String getGrammarFileName() { return "/home/bardia/scrawl/scrawl.g"; }
 
 
-		int blockNum=0;
+		int scope=0;
+		String thisDoc;
+		HashMap symbolTable = new HashMap();
 
 
 
 	// $ANTLR start "code"
-	// /home/bardia/scrawl/scrawl.g:7:1: code : mainRoutine ( procedure )* ;
+	// /home/bardia/scrawl/scrawl.g:14:1: code : mainRoutine ( procedure )* ;
 	public final void code() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "code");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(7, 0);
+		dbg.location(14, 0);
 
 		try {
-			// /home/bardia/scrawl/scrawl.g:7:6: ( mainRoutine ( procedure )* )
+			// /home/bardia/scrawl/scrawl.g:14:6: ( mainRoutine ( procedure )* )
 			dbg.enterAlt(1);
 
-			// /home/bardia/scrawl/scrawl.g:7:8: mainRoutine ( procedure )*
+			// /home/bardia/scrawl/scrawl.g:14:7: mainRoutine ( procedure )*
 			{
-			dbg.location(7,8);
+			dbg.location(14,7);
 
-						System.out.println("package main");
-						System.out.println("import \"fmt\"");
-						System.out.println("import \"net/http\"");
-					dbg.location(12,3);
-			pushFollow(FOLLOW_mainRoutine_in_code19);
+					System.out.println("package main");
+					System.out.println("import \"fmt\"");
+					System.out.println("import \"github.com/PuerkitoBio/goquery\"");
+				dbg.location(19,3);
+			pushFollow(FOLLOW_mainRoutine_in_code25);
 			mainRoutine();
 			state._fsp--;
-			dbg.location(12,15);
-			// /home/bardia/scrawl/scrawl.g:12:15: ( procedure )*
+			dbg.location(19,15);
+			// /home/bardia/scrawl/scrawl.g:19:15: ( procedure )*
 			try { dbg.enterSubRule(1);
 
 			loop1:
@@ -133,7 +138,7 @@ public class scrawlParser extends DebugParser {
 				try { dbg.enterDecision(1, decisionCanBacktrack[1]);
 
 				int LA1_0 = input.LA(1);
-				if ( (LA1_0==26) ) {
+				if ( (LA1_0==27) ) {
 					alt1=1;
 				}
 
@@ -143,10 +148,10 @@ public class scrawlParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/bardia/scrawl/scrawl.g:12:15: procedure
+					// /home/bardia/scrawl/scrawl.g:19:15: procedure
 					{
-					dbg.location(12,15);
-					pushFollow(FOLLOW_procedure_in_code21);
+					dbg.location(19,15);
+					pushFollow(FOLLOW_procedure_in_code27);
 					procedure();
 					state._fsp--;
 
@@ -169,7 +174,7 @@ public class scrawlParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(12, 24);
+		dbg.location(19, 24);
 
 		}
 		finally {
@@ -184,28 +189,30 @@ public class scrawlParser extends DebugParser {
 
 
 	// $ANTLR start "procedure"
-	// /home/bardia/scrawl/scrawl.g:14:1: procedure : 'procedure' ID block ;
+	// /home/bardia/scrawl/scrawl.g:21:1: procedure : 'procedure' ID block ;
 	public final void procedure() throws RecognitionException {
 		Token ID1=null;
 
 		try { dbg.enterRule(getGrammarFileName(), "procedure");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(14, 0);
+		dbg.location(21, 0);
 
 		try {
-			// /home/bardia/scrawl/scrawl.g:15:2: ( 'procedure' ID block )
+			// /home/bardia/scrawl/scrawl.g:22:2: ( 'procedure' ID block )
 			dbg.enterAlt(1);
 
-			// /home/bardia/scrawl/scrawl.g:15:4: 'procedure' ID block
+			// /home/bardia/scrawl/scrawl.g:22:4: 'procedure' ID block
 			{
-			dbg.location(15,4);
-			match(input,26,FOLLOW_26_in_procedure31); dbg.location(15,16);
-			ID1=(Token)match(input,ID,FOLLOW_ID_in_procedure33); dbg.location(16,3);
+			dbg.location(22,4);
+			match(input,27,FOLLOW_27_in_procedure37); dbg.location(22,16);
+			ID1=(Token)match(input,ID,FOLLOW_ID_in_procedure39); dbg.location(23,3);
 
-						System.out.print("func "+(ID1!=null?ID1.getText():null));
-					dbg.location(19,4);
-			pushFollow(FOLLOW_block_in_procedure42);
+						scope += 1;
+						System.out.print("\nfunc "+(ID1!=null?ID1.getText():null)+"(s *goquery.Selection)");
+						thisDoc="s";
+					dbg.location(28,4);
+			pushFollow(FOLLOW_block_in_procedure48);
 			block();
 			state._fsp--;
 
@@ -219,7 +226,7 @@ public class scrawlParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(19, 8);
+		dbg.location(28, 8);
 
 		}
 		finally {
@@ -234,23 +241,23 @@ public class scrawlParser extends DebugParser {
 
 
 	// $ANTLR start "mainRoutine"
-	// /home/bardia/scrawl/scrawl.g:21:1: mainRoutine : 'main' block ;
+	// /home/bardia/scrawl/scrawl.g:30:1: mainRoutine : 'main' block ;
 	public final void mainRoutine() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "mainRoutine");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(21, 0);
+		dbg.location(30, 0);
 
 		try {
-			// /home/bardia/scrawl/scrawl.g:22:2: ( 'main' block )
+			// /home/bardia/scrawl/scrawl.g:31:2: ( 'main' block )
 			dbg.enterAlt(1);
 
-			// /home/bardia/scrawl/scrawl.g:22:4: 'main' block
+			// /home/bardia/scrawl/scrawl.g:31:4: 'main' block
 			{
-			dbg.location(22,4);
-			match(input,22,FOLLOW_22_in_mainRoutine52); dbg.location(22,11);
-			System.out.print("func main()");dbg.location(23,4);
-			pushFollow(FOLLOW_block_in_mainRoutine59);
+			dbg.location(31,4);
+			match(input,23,FOLLOW_23_in_mainRoutine58); dbg.location(31,11);
+			System.out.print("func main()");dbg.location(32,4);
+			pushFollow(FOLLOW_block_in_mainRoutine65);
 			block();
 			state._fsp--;
 
@@ -264,7 +271,7 @@ public class scrawlParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(23, 8);
+		dbg.location(32, 8);
 
 		}
 		finally {
@@ -279,23 +286,23 @@ public class scrawlParser extends DebugParser {
 
 
 	// $ANTLR start "block"
-	// /home/bardia/scrawl/scrawl.g:25:1: block : '{' ( statement )* '}' ;
+	// /home/bardia/scrawl/scrawl.g:34:1: block : '{' ( statement )* '}' ;
 	public final void block() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "block");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(25, 0);
+		dbg.location(34, 0);
 
 		try {
-			// /home/bardia/scrawl/scrawl.g:25:7: ( '{' ( statement )* '}' )
+			// /home/bardia/scrawl/scrawl.g:34:7: ( '{' ( statement )* '}' )
 			dbg.enterAlt(1);
 
-			// /home/bardia/scrawl/scrawl.g:25:9: '{' ( statement )* '}'
+			// /home/bardia/scrawl/scrawl.g:34:9: '{' ( statement )* '}'
 			{
-			dbg.location(25,9);
-			match(input,27,FOLLOW_27_in_block68); dbg.location(25,14);
-			System.out.println("{"); blockNum+=1;dbg.location(26,4);
-			// /home/bardia/scrawl/scrawl.g:26:4: ( statement )*
+			dbg.location(34,9);
+			match(input,28,FOLLOW_28_in_block74); dbg.location(34,14);
+			System.out.println("{"); dbg.location(35,4);
+			// /home/bardia/scrawl/scrawl.g:35:4: ( statement )*
 			try { dbg.enterSubRule(2);
 
 			loop2:
@@ -304,7 +311,7 @@ public class scrawlParser extends DebugParser {
 				try { dbg.enterDecision(2, decisionCanBacktrack[2]);
 
 				int LA2_0 = input.LA(1);
-				if ( (LA2_0==ID||(LA2_0 >= 19 && LA2_0 <= 20)||(LA2_0 >= 24 && LA2_0 <= 25)) ) {
+				if ( (LA2_0==ID||(LA2_0 >= 20 && LA2_0 <= 21)||(LA2_0 >= 25 && LA2_0 <= 26)) ) {
 					alt2=1;
 				}
 
@@ -314,10 +321,10 @@ public class scrawlParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/bardia/scrawl/scrawl.g:26:4: statement
+					// /home/bardia/scrawl/scrawl.g:35:4: statement
 					{
-					dbg.location(26,4);
-					pushFollow(FOLLOW_statement_in_block76);
+					dbg.location(35,4);
+					pushFollow(FOLLOW_statement_in_block82);
 					statement();
 					state._fsp--;
 
@@ -329,9 +336,9 @@ public class scrawlParser extends DebugParser {
 				}
 			}
 			} finally {dbg.exitSubRule(2);}
-			dbg.location(27,5);
-			match(input,28,FOLLOW_28_in_block84); dbg.location(27,10);
-			System.out.println("}"); blockNum-=1;
+			dbg.location(36,5);
+			match(input,29,FOLLOW_29_in_block90); dbg.location(36,10);
+			System.out.print("}");
 			}
 
 		}
@@ -342,7 +349,7 @@ public class scrawlParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(27, 48);
+		dbg.location(36, 33);
 
 		}
 		finally {
@@ -357,25 +364,25 @@ public class scrawlParser extends DebugParser {
 
 
 	// $ANTLR start "statement"
-	// /home/bardia/scrawl/scrawl.g:29:1: statement : ( inSt | parseSt | assSt | foreachSt | printSt );
+	// /home/bardia/scrawl/scrawl.g:38:1: statement : ( inSt | parseSt | assSt | foreachSt | printSt );
 	public final void statement() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "statement");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(29, 0);
+		dbg.location(38, 0);
 
 		try {
-			// /home/bardia/scrawl/scrawl.g:30:2: ( inSt | parseSt | assSt | foreachSt | printSt )
+			// /home/bardia/scrawl/scrawl.g:39:2: ( inSt | parseSt | assSt | foreachSt | printSt )
 			int alt3=5;
 			try { dbg.enterDecision(3, decisionCanBacktrack[3]);
 
 			switch ( input.LA(1) ) {
-			case 20:
+			case 21:
 				{
 				alt3=1;
 				}
 				break;
-			case 24:
+			case 25:
 				{
 				alt3=2;
 				}
@@ -385,12 +392,12 @@ public class scrawlParser extends DebugParser {
 				alt3=3;
 				}
 				break;
-			case 19:
+			case 20:
 				{
 				alt3=4;
 				}
 				break;
-			case 25:
+			case 26:
 				{
 				alt3=5;
 				}
@@ -407,10 +414,10 @@ public class scrawlParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/bardia/scrawl/scrawl.g:30:4: inSt
+					// /home/bardia/scrawl/scrawl.g:39:4: inSt
 					{
-					dbg.location(30,4);
-					pushFollow(FOLLOW_inSt_in_statement96);
+					dbg.location(39,4);
+					pushFollow(FOLLOW_inSt_in_statement102);
 					inSt();
 					state._fsp--;
 
@@ -419,10 +426,10 @@ public class scrawlParser extends DebugParser {
 				case 2 :
 					dbg.enterAlt(2);
 
-					// /home/bardia/scrawl/scrawl.g:31:4: parseSt
+					// /home/bardia/scrawl/scrawl.g:40:4: parseSt
 					{
-					dbg.location(31,4);
-					pushFollow(FOLLOW_parseSt_in_statement101);
+					dbg.location(40,4);
+					pushFollow(FOLLOW_parseSt_in_statement107);
 					parseSt();
 					state._fsp--;
 
@@ -431,10 +438,10 @@ public class scrawlParser extends DebugParser {
 				case 3 :
 					dbg.enterAlt(3);
 
-					// /home/bardia/scrawl/scrawl.g:32:4: assSt
+					// /home/bardia/scrawl/scrawl.g:41:4: assSt
 					{
-					dbg.location(32,4);
-					pushFollow(FOLLOW_assSt_in_statement106);
+					dbg.location(41,4);
+					pushFollow(FOLLOW_assSt_in_statement112);
 					assSt();
 					state._fsp--;
 
@@ -443,10 +450,10 @@ public class scrawlParser extends DebugParser {
 				case 4 :
 					dbg.enterAlt(4);
 
-					// /home/bardia/scrawl/scrawl.g:33:4: foreachSt
+					// /home/bardia/scrawl/scrawl.g:42:4: foreachSt
 					{
-					dbg.location(33,4);
-					pushFollow(FOLLOW_foreachSt_in_statement111);
+					dbg.location(42,4);
+					pushFollow(FOLLOW_foreachSt_in_statement117);
 					foreachSt();
 					state._fsp--;
 
@@ -455,10 +462,10 @@ public class scrawlParser extends DebugParser {
 				case 5 :
 					dbg.enterAlt(5);
 
-					// /home/bardia/scrawl/scrawl.g:34:4: printSt
+					// /home/bardia/scrawl/scrawl.g:43:4: printSt
 					{
-					dbg.location(34,4);
-					pushFollow(FOLLOW_printSt_in_statement116);
+					dbg.location(43,4);
+					pushFollow(FOLLOW_printSt_in_statement122);
 					printSt();
 					state._fsp--;
 
@@ -474,7 +481,7 @@ public class scrawlParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(34, 10);
+		dbg.location(43, 10);
 
 		}
 		finally {
@@ -489,37 +496,39 @@ public class scrawlParser extends DebugParser {
 
 
 	// $ANTLR start "inSt"
-	// /home/bardia/scrawl/scrawl.g:36:1: inSt : 'in' ( STRING ) block ;
+	// /home/bardia/scrawl/scrawl.g:45:1: inSt : 'in' ( STRING ) block ;
 	public final void inSt() throws RecognitionException {
 		Token STRING2=null;
 
 		try { dbg.enterRule(getGrammarFileName(), "inSt");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(36, 0);
+		dbg.location(45, 0);
 
 		try {
-			// /home/bardia/scrawl/scrawl.g:36:6: ( 'in' ( STRING ) block )
+			// /home/bardia/scrawl/scrawl.g:45:6: ( 'in' ( STRING ) block )
 			dbg.enterAlt(1);
 
-			// /home/bardia/scrawl/scrawl.g:36:8: 'in' ( STRING ) block
+			// /home/bardia/scrawl/scrawl.g:45:8: 'in' ( STRING ) block
 			{
-			dbg.location(36,8);
-			match(input,20,FOLLOW_20_in_inSt125); dbg.location(36,13);
-			// /home/bardia/scrawl/scrawl.g:36:13: ( STRING )
+			dbg.location(45,8);
+			match(input,21,FOLLOW_21_in_inSt131); dbg.location(45,13);
+			// /home/bardia/scrawl/scrawl.g:45:13: ( STRING )
 			dbg.enterAlt(1);
 
-			// /home/bardia/scrawl/scrawl.g:36:14: STRING
+			// /home/bardia/scrawl/scrawl.g:45:14: STRING
 			{
-			dbg.location(36,14);
-			STRING2=(Token)match(input,STRING,FOLLOW_STRING_in_inSt128); 
+			dbg.location(45,14);
+			STRING2=(Token)match(input,STRING,FOLLOW_STRING_in_inSt134); 
 			}
-			dbg.location(36,22);
+			dbg.location(45,22);
 
-							System.out.println("resp"+blockNum+", err"+blockNum+" := http.Get("+(STRING2!=null?STRING2.getText():null)+")");
-							System.out.print("if err"+blockNum+" == nil");
-						dbg.location(40,3);
-			pushFollow(FOLLOW_block_in_inSt135);
+							scope += 1;
+							System.out.println("resp"+scope+", err"+scope+" := goquery.NewDocument("+(STRING2!=null?STRING2.getText():null)+")");
+							System.out.print("if err"+scope+" == nil");
+							thisDoc = "resp"+scope ;
+						dbg.location(51,3);
+			pushFollow(FOLLOW_block_in_inSt141);
 			block();
 			state._fsp--;
 
@@ -533,7 +542,7 @@ public class scrawlParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(40, 7);
+		dbg.location(51, 7);
 
 		}
 		finally {
@@ -548,27 +557,36 @@ public class scrawlParser extends DebugParser {
 
 
 	// $ANTLR start "assSt"
-	// /home/bardia/scrawl/scrawl.g:42:1: assSt : ID '=' exp ';' ;
+	// /home/bardia/scrawl/scrawl.g:53:1: assSt : ID '=' exp ';' ;
 	public final void assSt() throws RecognitionException {
+		Token ID3=null;
+		ParserRuleReturnScope exp4 =null;
+
 		try { dbg.enterRule(getGrammarFileName(), "assSt");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(42, 0);
+		dbg.location(53, 0);
 
 		try {
-			// /home/bardia/scrawl/scrawl.g:42:7: ( ID '=' exp ';' )
+			// /home/bardia/scrawl/scrawl.g:53:7: ( ID '=' exp ';' )
 			dbg.enterAlt(1);
 
-			// /home/bardia/scrawl/scrawl.g:42:9: ID '=' exp ';'
+			// /home/bardia/scrawl/scrawl.g:53:9: ID '=' exp ';'
 			{
-			dbg.location(42,9);
-			match(input,ID,FOLLOW_ID_in_assSt143); dbg.location(42,12);
-			match(input,13,FOLLOW_13_in_assSt145); dbg.location(42,16);
-			pushFollow(FOLLOW_exp_in_assSt147);
-			exp();
+			dbg.location(53,9);
+			ID3=(Token)match(input,ID,FOLLOW_ID_in_assSt149); dbg.location(53,12);
+			match(input,14,FOLLOW_14_in_assSt151); dbg.location(53,16);
+			pushFollow(FOLLOW_exp_in_assSt153);
+			exp4=exp();
 			state._fsp--;
-			dbg.location(42,20);
-			match(input,12,FOLLOW_12_in_assSt149); 
+			dbg.location(53,20);
+			match(input,13,FOLLOW_13_in_assSt155); dbg.location(54,3);
+
+						String temp = (ID3!=null?ID3.getText():null) ;
+						for(int i = 0;i<(exp4!=null?((scrawlParser.exp_return)exp4).ignore:0);i++)
+							temp += ", _ ";
+						System.out.println(temp+ ":="+(exp4!=null?((scrawlParser.exp_return)exp4).value:null));
+					
 			}
 
 		}
@@ -579,7 +597,7 @@ public class scrawlParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(42, 22);
+		dbg.location(59, 3);
 
 		}
 		finally {
@@ -594,29 +612,36 @@ public class scrawlParser extends DebugParser {
 
 
 	// $ANTLR start "foreachSt"
-	// /home/bardia/scrawl/scrawl.g:44:1: foreachSt : 'foreach' selector block ;
+	// /home/bardia/scrawl/scrawl.g:61:1: foreachSt : 'foreach' selector block ;
 	public final void foreachSt() throws RecognitionException {
+		String selector5 =null;
+
 		try { dbg.enterRule(getGrammarFileName(), "foreachSt");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(44, 0);
+		dbg.location(61, 0);
 
 		try {
-			// /home/bardia/scrawl/scrawl.g:45:2: ( 'foreach' selector block )
+			// /home/bardia/scrawl/scrawl.g:62:2: ( 'foreach' selector block )
 			dbg.enterAlt(1);
 
-			// /home/bardia/scrawl/scrawl.g:45:4: 'foreach' selector block
+			// /home/bardia/scrawl/scrawl.g:62:4: 'foreach' selector block
 			{
-			dbg.location(45,4);
-			match(input,19,FOLLOW_19_in_foreachSt158); dbg.location(45,14);
-			pushFollow(FOLLOW_selector_in_foreachSt160);
-			selector();
+			dbg.location(62,4);
+			match(input,20,FOLLOW_20_in_foreachSt168); dbg.location(62,14);
+			pushFollow(FOLLOW_selector_in_foreachSt170);
+			selector5=selector();
 			state._fsp--;
-			dbg.location(45,23);
-			pushFollow(FOLLOW_block_in_foreachSt162);
+			dbg.location(63,3);
+
+						scope+=1;
+						System.out.print(selector5+".Each(func(i int, resp"+scope+" *goquery.Selection) ");
+					dbg.location(67,3);
+			pushFollow(FOLLOW_block_in_foreachSt179);
 			block();
 			state._fsp--;
-
+			dbg.location(67,9);
+			System.out.println(")"); scope -=1;
 			}
 
 		}
@@ -627,7 +652,7 @@ public class scrawlParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(45, 27);
+		dbg.location(67, 45);
 
 		}
 		finally {
@@ -642,32 +667,35 @@ public class scrawlParser extends DebugParser {
 
 
 	// $ANTLR start "parseSt"
-	// /home/bardia/scrawl/scrawl.g:47:1: parseSt : ( 'parse' 'first' exp 'by' ID ';' | 'parse' 'last' exp 'by' ID ';' | 'parse' 'now' exp 'by' ID ';' );
+	// /home/bardia/scrawl/scrawl.g:69:1: parseSt : ( 'parse' 'first' exp 'by' ID ';' | 'parse' 'last' exp 'by' ID ';' | 'parse' 'now' exp 'by' ID ';' );
 	public final void parseSt() throws RecognitionException {
+		Token ID6=null;
+		ParserRuleReturnScope exp7 =null;
+
 		try { dbg.enterRule(getGrammarFileName(), "parseSt");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(47, 0);
+		dbg.location(69, 0);
 
 		try {
-			// /home/bardia/scrawl/scrawl.g:47:9: ( 'parse' 'first' exp 'by' ID ';' | 'parse' 'last' exp 'by' ID ';' | 'parse' 'now' exp 'by' ID ';' )
+			// /home/bardia/scrawl/scrawl.g:69:9: ( 'parse' 'first' exp 'by' ID ';' | 'parse' 'last' exp 'by' ID ';' | 'parse' 'now' exp 'by' ID ';' )
 			int alt4=3;
 			try { dbg.enterDecision(4, decisionCanBacktrack[4]);
 
 			int LA4_0 = input.LA(1);
-			if ( (LA4_0==24) ) {
+			if ( (LA4_0==25) ) {
 				switch ( input.LA(2) ) {
-				case 18:
+				case 19:
 					{
 					alt4=1;
 					}
 					break;
-				case 21:
+				case 22:
 					{
 					alt4=2;
 					}
 					break;
-				case 23:
+				case 24:
 					{
 					alt4=3;
 					}
@@ -699,52 +727,53 @@ public class scrawlParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/bardia/scrawl/scrawl.g:47:11: 'parse' 'first' exp 'by' ID ';'
+					// /home/bardia/scrawl/scrawl.g:69:11: 'parse' 'first' exp 'by' ID ';'
 					{
-					dbg.location(47,11);
-					match(input,24,FOLLOW_24_in_parseSt171); dbg.location(47,19);
-					match(input,18,FOLLOW_18_in_parseSt173); dbg.location(47,27);
-					pushFollow(FOLLOW_exp_in_parseSt175);
-					exp();
+					dbg.location(69,11);
+					match(input,25,FOLLOW_25_in_parseSt190); dbg.location(69,19);
+					match(input,19,FOLLOW_19_in_parseSt192); dbg.location(69,27);
+					pushFollow(FOLLOW_exp_in_parseSt194);
+					exp7=exp();
 					state._fsp--;
-					dbg.location(47,31);
-					match(input,17,FOLLOW_17_in_parseSt177); dbg.location(47,36);
-					match(input,ID,FOLLOW_ID_in_parseSt179); dbg.location(47,39);
-					match(input,12,FOLLOW_12_in_parseSt181); 
+					dbg.location(69,31);
+					match(input,18,FOLLOW_18_in_parseSt196); dbg.location(69,36);
+					ID6=(Token)match(input,ID,FOLLOW_ID_in_parseSt198); dbg.location(69,39);
+					match(input,13,FOLLOW_13_in_parseSt200); dbg.location(70,4);
+					 System.out.println((ID6!=null?ID6.getText():null)+"("+(exp7!=null?((scrawlParser.exp_return)exp7).value:null)+")");
 					}
 					break;
 				case 2 :
 					dbg.enterAlt(2);
 
-					// /home/bardia/scrawl/scrawl.g:48:4: 'parse' 'last' exp 'by' ID ';'
+					// /home/bardia/scrawl/scrawl.g:71:4: 'parse' 'last' exp 'by' ID ';'
 					{
-					dbg.location(48,4);
-					match(input,24,FOLLOW_24_in_parseSt186); dbg.location(48,12);
-					match(input,21,FOLLOW_21_in_parseSt188); dbg.location(48,19);
-					pushFollow(FOLLOW_exp_in_parseSt190);
+					dbg.location(71,4);
+					match(input,25,FOLLOW_25_in_parseSt211); dbg.location(71,12);
+					match(input,22,FOLLOW_22_in_parseSt213); dbg.location(71,19);
+					pushFollow(FOLLOW_exp_in_parseSt215);
 					exp();
 					state._fsp--;
-					dbg.location(48,23);
-					match(input,17,FOLLOW_17_in_parseSt192); dbg.location(48,28);
-					match(input,ID,FOLLOW_ID_in_parseSt194); dbg.location(48,31);
-					match(input,12,FOLLOW_12_in_parseSt196); 
+					dbg.location(71,23);
+					match(input,18,FOLLOW_18_in_parseSt217); dbg.location(71,28);
+					match(input,ID,FOLLOW_ID_in_parseSt219); dbg.location(71,31);
+					match(input,13,FOLLOW_13_in_parseSt221); 
 					}
 					break;
 				case 3 :
 					dbg.enterAlt(3);
 
-					// /home/bardia/scrawl/scrawl.g:49:4: 'parse' 'now' exp 'by' ID ';'
+					// /home/bardia/scrawl/scrawl.g:72:4: 'parse' 'now' exp 'by' ID ';'
 					{
-					dbg.location(49,4);
-					match(input,24,FOLLOW_24_in_parseSt201); dbg.location(49,12);
-					match(input,23,FOLLOW_23_in_parseSt203); dbg.location(49,18);
-					pushFollow(FOLLOW_exp_in_parseSt205);
+					dbg.location(72,4);
+					match(input,25,FOLLOW_25_in_parseSt226); dbg.location(72,12);
+					match(input,24,FOLLOW_24_in_parseSt228); dbg.location(72,18);
+					pushFollow(FOLLOW_exp_in_parseSt230);
 					exp();
 					state._fsp--;
-					dbg.location(49,22);
-					match(input,17,FOLLOW_17_in_parseSt207); dbg.location(49,27);
-					match(input,ID,FOLLOW_ID_in_parseSt209); dbg.location(49,30);
-					match(input,12,FOLLOW_12_in_parseSt211); 
+					dbg.location(72,22);
+					match(input,18,FOLLOW_18_in_parseSt232); dbg.location(72,27);
+					match(input,ID,FOLLOW_ID_in_parseSt234); dbg.location(72,30);
+					match(input,13,FOLLOW_13_in_parseSt236); 
 					}
 					break;
 
@@ -757,7 +786,7 @@ public class scrawlParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(49, 32);
+		dbg.location(72, 32);
 
 		}
 		finally {
@@ -772,26 +801,29 @@ public class scrawlParser extends DebugParser {
 
 
 	// $ANTLR start "printSt"
-	// /home/bardia/scrawl/scrawl.g:51:1: printSt : 'print' exp ';' ;
+	// /home/bardia/scrawl/scrawl.g:74:1: printSt : 'print' exp ';' ;
 	public final void printSt() throws RecognitionException {
+		ParserRuleReturnScope exp8 =null;
+
 		try { dbg.enterRule(getGrammarFileName(), "printSt");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(51, 0);
+		dbg.location(74, 0);
 
 		try {
-			// /home/bardia/scrawl/scrawl.g:51:9: ( 'print' exp ';' )
+			// /home/bardia/scrawl/scrawl.g:74:9: ( 'print' exp ';' )
 			dbg.enterAlt(1);
 
-			// /home/bardia/scrawl/scrawl.g:51:11: 'print' exp ';'
+			// /home/bardia/scrawl/scrawl.g:74:11: 'print' exp ';'
 			{
-			dbg.location(51,11);
-			match(input,25,FOLLOW_25_in_printSt220); dbg.location(51,19);
-			pushFollow(FOLLOW_exp_in_printSt222);
-			exp();
+			dbg.location(74,11);
+			match(input,26,FOLLOW_26_in_printSt245); dbg.location(74,19);
+			pushFollow(FOLLOW_exp_in_printSt247);
+			exp8=exp();
 			state._fsp--;
-			dbg.location(51,23);
-			match(input,12,FOLLOW_12_in_printSt224); 
+			dbg.location(74,23);
+			match(input,13,FOLLOW_13_in_printSt249); dbg.location(75,4);
+			 System.out.println("fmt.Println("+(exp8!=null?((scrawlParser.exp_return)exp8).value:null)+")");
 			}
 
 		}
@@ -802,7 +834,7 @@ public class scrawlParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(51, 26);
+		dbg.location(75, 57);
 
 		}
 		finally {
@@ -815,18 +847,31 @@ public class scrawlParser extends DebugParser {
 	// $ANTLR end "printSt"
 
 
+	public static class exp_return extends ParserRuleReturnScope {
+		public String value;
+		public int ignore;
+	};
+
 
 	// $ANTLR start "exp"
-	// /home/bardia/scrawl/scrawl.g:53:1: exp : ( ID | STRING | selector '@' ID );
-	public final void exp() throws RecognitionException {
+	// /home/bardia/scrawl/scrawl.g:77:1: exp returns [String value, int ignore] : ( ID | STRING | selector '@' ID | THIS );
+	public final scrawlParser.exp_return exp() throws RecognitionException {
+		scrawlParser.exp_return retval = new scrawlParser.exp_return();
+		retval.start = input.LT(1);
+
+		Token ID9=null;
+		Token STRING10=null;
+		Token ID12=null;
+		String selector11 =null;
+
 		try { dbg.enterRule(getGrammarFileName(), "exp");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(53, 0);
+		dbg.location(77, 0);
 
 		try {
-			// /home/bardia/scrawl/scrawl.g:53:5: ( ID | STRING | selector '@' ID )
-			int alt5=3;
+			// /home/bardia/scrawl/scrawl.g:77:41: ( ID | STRING | selector '@' ID | THIS )
+			int alt5=4;
 			try { dbg.enterDecision(5, decisionCanBacktrack[5]);
 
 			switch ( input.LA(1) ) {
@@ -840,9 +885,14 @@ public class scrawlParser extends DebugParser {
 				alt5=2;
 				}
 				break;
-			case 9:
+			case 10:
 				{
 				alt5=3;
+				}
+				break;
+			case THIS:
+				{
+				alt5=4;
 				}
 				break;
 			default:
@@ -857,37 +907,52 @@ public class scrawlParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/bardia/scrawl/scrawl.g:53:7: ID
+					// /home/bardia/scrawl/scrawl.g:77:43: ID
 					{
-					dbg.location(53,7);
-					match(input,ID,FOLLOW_ID_in_exp233); 
+					dbg.location(77,43);
+					ID9=(Token)match(input,ID,FOLLOW_ID_in_exp268); dbg.location(77,46);
+					retval.value = (ID9!=null?ID9.getText():null);
 					}
 					break;
 				case 2 :
 					dbg.enterAlt(2);
 
-					// /home/bardia/scrawl/scrawl.g:54:4: STRING
+					// /home/bardia/scrawl/scrawl.g:78:4: STRING
 					{
-					dbg.location(54,4);
-					match(input,STRING,FOLLOW_STRING_in_exp238); 
+					dbg.location(78,4);
+					STRING10=(Token)match(input,STRING,FOLLOW_STRING_in_exp275); dbg.location(78,11);
+					retval.value = (STRING10!=null?STRING10.getText():null); retval.ignore =0;
 					}
 					break;
 				case 3 :
 					dbg.enterAlt(3);
 
-					// /home/bardia/scrawl/scrawl.g:55:4: selector '@' ID
+					// /home/bardia/scrawl/scrawl.g:79:4: selector '@' ID
 					{
-					dbg.location(55,4);
-					pushFollow(FOLLOW_selector_in_exp243);
-					selector();
+					dbg.location(79,4);
+					pushFollow(FOLLOW_selector_in_exp282);
+					selector11=selector();
 					state._fsp--;
-					dbg.location(55,12);
-					match(input,14,FOLLOW_14_in_exp244); dbg.location(55,15);
-					match(input,ID,FOLLOW_ID_in_exp245); 
+					dbg.location(79,12);
+					match(input,15,FOLLOW_15_in_exp283); dbg.location(79,15);
+					ID12=(Token)match(input,ID,FOLLOW_ID_in_exp284); dbg.location(79,17);
+					retval.value =selector11+".First().Attr(\""+(ID12!=null?ID12.getText():null)+"\")";retval.ignore =1;
+					}
+					break;
+				case 4 :
+					dbg.enterAlt(4);
+
+					// /home/bardia/scrawl/scrawl.g:80:4: THIS
+					{
+					dbg.location(80,4);
+					match(input,THIS,FOLLOW_THIS_in_exp290); dbg.location(80,9);
+					retval.value ="resp"+scope;retval.ignore =0;
 					}
 					break;
 
 			}
+			retval.stop = input.LT(-1);
+
 		}
 		catch (RecognitionException re) {
 			reportError(re);
@@ -896,7 +961,7 @@ public class scrawlParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(55, 16);
+		dbg.location(80, 40);
 
 		}
 		finally {
@@ -905,32 +970,36 @@ public class scrawlParser extends DebugParser {
 			if ( getRuleLevel()==0 ) {dbg.terminate();}
 		}
 
+		return retval;
 	}
 	// $ANTLR end "exp"
 
 
 
 	// $ANTLR start "selector"
-	// /home/bardia/scrawl/scrawl.g:57:1: selector : '(' xPath ')' ;
-	public final void selector() throws RecognitionException {
+	// /home/bardia/scrawl/scrawl.g:82:1: selector returns [String value] : '(' STRING ')' ;
+	public final String selector() throws RecognitionException {
+		String value = null;
+
+
+		Token STRING13=null;
+
 		try { dbg.enterRule(getGrammarFileName(), "selector");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(57, 0);
+		dbg.location(82, 0);
 
 		try {
-			// /home/bardia/scrawl/scrawl.g:57:10: ( '(' xPath ')' )
+			// /home/bardia/scrawl/scrawl.g:82:32: ( '(' STRING ')' )
 			dbg.enterAlt(1);
 
-			// /home/bardia/scrawl/scrawl.g:58:3: '(' xPath ')'
+			// /home/bardia/scrawl/scrawl.g:83:3: '(' STRING ')'
 			{
-			dbg.location(58,3);
-			match(input,9,FOLLOW_9_in_selector256); dbg.location(58,7);
-			pushFollow(FOLLOW_xPath_in_selector258);
-			xPath();
-			state._fsp--;
-			dbg.location(58,13);
-			match(input,10,FOLLOW_10_in_selector260); 
+			dbg.location(83,3);
+			match(input,10,FOLLOW_10_in_selector306); dbg.location(83,7);
+			STRING13=(Token)match(input,STRING,FOLLOW_STRING_in_selector308); dbg.location(83,14);
+			match(input,11,FOLLOW_11_in_selector310); dbg.location(83,18);
+			value =thisDoc+".Find("+(STRING13!=null?STRING13.getText():null)+")";
 			}
 
 		}
@@ -941,7 +1010,7 @@ public class scrawlParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(58, 15);
+		dbg.location(83, 60);
 
 		}
 		finally {
@@ -950,34 +1019,35 @@ public class scrawlParser extends DebugParser {
 			if ( getRuleLevel()==0 ) {dbg.terminate();}
 		}
 
+		return value;
 	}
 	// $ANTLR end "selector"
 
 
 
 	// $ANTLR start "xPath"
-	// /home/bardia/scrawl/scrawl.g:60:1: xPath : TAG ( '[' NUMBER ']' )? ( '.' TAG ( '[' NUMBER ']' )? )* ;
+	// /home/bardia/scrawl/scrawl.g:85:1: xPath : TAG ( '[' NUMBER ']' )? ( '.' TAG ( '[' NUMBER ']' )? )* ;
 	public final void xPath() throws RecognitionException {
 		try { dbg.enterRule(getGrammarFileName(), "xPath");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(60, 0);
+		dbg.location(85, 0);
 
 		try {
-			// /home/bardia/scrawl/scrawl.g:60:7: ( TAG ( '[' NUMBER ']' )? ( '.' TAG ( '[' NUMBER ']' )? )* )
+			// /home/bardia/scrawl/scrawl.g:85:7: ( TAG ( '[' NUMBER ']' )? ( '.' TAG ( '[' NUMBER ']' )? )* )
 			dbg.enterAlt(1);
 
-			// /home/bardia/scrawl/scrawl.g:60:9: TAG ( '[' NUMBER ']' )? ( '.' TAG ( '[' NUMBER ']' )? )*
+			// /home/bardia/scrawl/scrawl.g:85:9: TAG ( '[' NUMBER ']' )? ( '.' TAG ( '[' NUMBER ']' )? )*
 			{
-			dbg.location(60,9);
-			match(input,TAG,FOLLOW_TAG_in_xPath270); dbg.location(60,12);
-			// /home/bardia/scrawl/scrawl.g:60:12: ( '[' NUMBER ']' )?
+			dbg.location(85,9);
+			match(input,TAG,FOLLOW_TAG_in_xPath322); dbg.location(85,12);
+			// /home/bardia/scrawl/scrawl.g:85:12: ( '[' NUMBER ']' )?
 			int alt6=2;
 			try { dbg.enterSubRule(6);
 			try { dbg.enterDecision(6, decisionCanBacktrack[6]);
 
 			int LA6_0 = input.LA(1);
-			if ( (LA6_0==15) ) {
+			if ( (LA6_0==16) ) {
 				alt6=1;
 			}
 			} finally {dbg.exitDecision(6);}
@@ -986,19 +1056,19 @@ public class scrawlParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/bardia/scrawl/scrawl.g:60:13: '[' NUMBER ']'
+					// /home/bardia/scrawl/scrawl.g:85:13: '[' NUMBER ']'
 					{
-					dbg.location(60,13);
-					match(input,15,FOLLOW_15_in_xPath272); dbg.location(60,16);
-					match(input,NUMBER,FOLLOW_NUMBER_in_xPath273); dbg.location(60,22);
-					match(input,16,FOLLOW_16_in_xPath274); 
+					dbg.location(85,13);
+					match(input,16,FOLLOW_16_in_xPath324); dbg.location(85,16);
+					match(input,NUMBER,FOLLOW_NUMBER_in_xPath325); dbg.location(85,22);
+					match(input,17,FOLLOW_17_in_xPath326); 
 					}
 					break;
 
 			}
 			} finally {dbg.exitSubRule(6);}
-			dbg.location(60,27);
-			// /home/bardia/scrawl/scrawl.g:60:27: ( '.' TAG ( '[' NUMBER ']' )? )*
+			dbg.location(85,27);
+			// /home/bardia/scrawl/scrawl.g:85:27: ( '.' TAG ( '[' NUMBER ']' )? )*
 			try { dbg.enterSubRule(8);
 
 			loop8:
@@ -1007,7 +1077,7 @@ public class scrawlParser extends DebugParser {
 				try { dbg.enterDecision(8, decisionCanBacktrack[8]);
 
 				int LA8_0 = input.LA(1);
-				if ( (LA8_0==11) ) {
+				if ( (LA8_0==12) ) {
 					alt8=1;
 				}
 
@@ -1017,18 +1087,18 @@ public class scrawlParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/bardia/scrawl/scrawl.g:60:28: '.' TAG ( '[' NUMBER ']' )?
+					// /home/bardia/scrawl/scrawl.g:85:28: '.' TAG ( '[' NUMBER ']' )?
 					{
-					dbg.location(60,28);
-					match(input,11,FOLLOW_11_in_xPath278); dbg.location(60,31);
-					match(input,TAG,FOLLOW_TAG_in_xPath279); dbg.location(60,34);
-					// /home/bardia/scrawl/scrawl.g:60:34: ( '[' NUMBER ']' )?
+					dbg.location(85,28);
+					match(input,12,FOLLOW_12_in_xPath330); dbg.location(85,31);
+					match(input,TAG,FOLLOW_TAG_in_xPath331); dbg.location(85,34);
+					// /home/bardia/scrawl/scrawl.g:85:34: ( '[' NUMBER ']' )?
 					int alt7=2;
 					try { dbg.enterSubRule(7);
 					try { dbg.enterDecision(7, decisionCanBacktrack[7]);
 
 					int LA7_0 = input.LA(1);
-					if ( (LA7_0==15) ) {
+					if ( (LA7_0==16) ) {
 						alt7=1;
 					}
 					} finally {dbg.exitDecision(7);}
@@ -1037,12 +1107,12 @@ public class scrawlParser extends DebugParser {
 						case 1 :
 							dbg.enterAlt(1);
 
-							// /home/bardia/scrawl/scrawl.g:60:35: '[' NUMBER ']'
+							// /home/bardia/scrawl/scrawl.g:85:35: '[' NUMBER ']'
 							{
-							dbg.location(60,35);
-							match(input,15,FOLLOW_15_in_xPath281); dbg.location(60,38);
-							match(input,NUMBER,FOLLOW_NUMBER_in_xPath282); dbg.location(60,44);
-							match(input,16,FOLLOW_16_in_xPath283); 
+							dbg.location(85,35);
+							match(input,16,FOLLOW_16_in_xPath333); dbg.location(85,38);
+							match(input,NUMBER,FOLLOW_NUMBER_in_xPath334); dbg.location(85,44);
+							match(input,17,FOLLOW_17_in_xPath335); 
 							}
 							break;
 
@@ -1068,7 +1138,7 @@ public class scrawlParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(60, 50);
+		dbg.location(85, 50);
 
 		}
 		finally {
@@ -1084,67 +1154,68 @@ public class scrawlParser extends DebugParser {
 
 
 
-	public static final BitSet FOLLOW_mainRoutine_in_code19 = new BitSet(new long[]{0x0000000004000002L});
-	public static final BitSet FOLLOW_procedure_in_code21 = new BitSet(new long[]{0x0000000004000002L});
-	public static final BitSet FOLLOW_26_in_procedure31 = new BitSet(new long[]{0x0000000000000010L});
-	public static final BitSet FOLLOW_ID_in_procedure33 = new BitSet(new long[]{0x0000000008000000L});
-	public static final BitSet FOLLOW_block_in_procedure42 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_22_in_mainRoutine52 = new BitSet(new long[]{0x0000000008000000L});
-	public static final BitSet FOLLOW_block_in_mainRoutine59 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_27_in_block68 = new BitSet(new long[]{0x0000000013180010L});
-	public static final BitSet FOLLOW_statement_in_block76 = new BitSet(new long[]{0x0000000013180010L});
-	public static final BitSet FOLLOW_28_in_block84 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_inSt_in_statement96 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_parseSt_in_statement101 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_assSt_in_statement106 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_foreachSt_in_statement111 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_printSt_in_statement116 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_20_in_inSt125 = new BitSet(new long[]{0x0000000000000040L});
-	public static final BitSet FOLLOW_STRING_in_inSt128 = new BitSet(new long[]{0x0000000008000000L});
-	public static final BitSet FOLLOW_block_in_inSt135 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ID_in_assSt143 = new BitSet(new long[]{0x0000000000002000L});
-	public static final BitSet FOLLOW_13_in_assSt145 = new BitSet(new long[]{0x0000000000000250L});
-	public static final BitSet FOLLOW_exp_in_assSt147 = new BitSet(new long[]{0x0000000000001000L});
-	public static final BitSet FOLLOW_12_in_assSt149 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_19_in_foreachSt158 = new BitSet(new long[]{0x0000000000000200L});
-	public static final BitSet FOLLOW_selector_in_foreachSt160 = new BitSet(new long[]{0x0000000008000000L});
-	public static final BitSet FOLLOW_block_in_foreachSt162 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_24_in_parseSt171 = new BitSet(new long[]{0x0000000000040000L});
-	public static final BitSet FOLLOW_18_in_parseSt173 = new BitSet(new long[]{0x0000000000000250L});
-	public static final BitSet FOLLOW_exp_in_parseSt175 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_17_in_parseSt177 = new BitSet(new long[]{0x0000000000000010L});
-	public static final BitSet FOLLOW_ID_in_parseSt179 = new BitSet(new long[]{0x0000000000001000L});
-	public static final BitSet FOLLOW_12_in_parseSt181 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_24_in_parseSt186 = new BitSet(new long[]{0x0000000000200000L});
-	public static final BitSet FOLLOW_21_in_parseSt188 = new BitSet(new long[]{0x0000000000000250L});
-	public static final BitSet FOLLOW_exp_in_parseSt190 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_17_in_parseSt192 = new BitSet(new long[]{0x0000000000000010L});
-	public static final BitSet FOLLOW_ID_in_parseSt194 = new BitSet(new long[]{0x0000000000001000L});
-	public static final BitSet FOLLOW_12_in_parseSt196 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_24_in_parseSt201 = new BitSet(new long[]{0x0000000000800000L});
-	public static final BitSet FOLLOW_23_in_parseSt203 = new BitSet(new long[]{0x0000000000000250L});
-	public static final BitSet FOLLOW_exp_in_parseSt205 = new BitSet(new long[]{0x0000000000020000L});
-	public static final BitSet FOLLOW_17_in_parseSt207 = new BitSet(new long[]{0x0000000000000010L});
-	public static final BitSet FOLLOW_ID_in_parseSt209 = new BitSet(new long[]{0x0000000000001000L});
-	public static final BitSet FOLLOW_12_in_parseSt211 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_25_in_printSt220 = new BitSet(new long[]{0x0000000000000250L});
-	public static final BitSet FOLLOW_exp_in_printSt222 = new BitSet(new long[]{0x0000000000001000L});
-	public static final BitSet FOLLOW_12_in_printSt224 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ID_in_exp233 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STRING_in_exp238 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_selector_in_exp243 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_14_in_exp244 = new BitSet(new long[]{0x0000000000000010L});
-	public static final BitSet FOLLOW_ID_in_exp245 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_9_in_selector256 = new BitSet(new long[]{0x0000000000000080L});
-	public static final BitSet FOLLOW_xPath_in_selector258 = new BitSet(new long[]{0x0000000000000400L});
-	public static final BitSet FOLLOW_10_in_selector260 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_TAG_in_xPath270 = new BitSet(new long[]{0x0000000000008802L});
-	public static final BitSet FOLLOW_15_in_xPath272 = new BitSet(new long[]{0x0000000000000020L});
-	public static final BitSet FOLLOW_NUMBER_in_xPath273 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_16_in_xPath274 = new BitSet(new long[]{0x0000000000000802L});
-	public static final BitSet FOLLOW_11_in_xPath278 = new BitSet(new long[]{0x0000000000000080L});
-	public static final BitSet FOLLOW_TAG_in_xPath279 = new BitSet(new long[]{0x0000000000008802L});
-	public static final BitSet FOLLOW_15_in_xPath281 = new BitSet(new long[]{0x0000000000000020L});
-	public static final BitSet FOLLOW_NUMBER_in_xPath282 = new BitSet(new long[]{0x0000000000010000L});
-	public static final BitSet FOLLOW_16_in_xPath283 = new BitSet(new long[]{0x0000000000000802L});
+	public static final BitSet FOLLOW_mainRoutine_in_code25 = new BitSet(new long[]{0x0000000008000002L});
+	public static final BitSet FOLLOW_procedure_in_code27 = new BitSet(new long[]{0x0000000008000002L});
+	public static final BitSet FOLLOW_27_in_procedure37 = new BitSet(new long[]{0x0000000000000010L});
+	public static final BitSet FOLLOW_ID_in_procedure39 = new BitSet(new long[]{0x0000000010000000L});
+	public static final BitSet FOLLOW_block_in_procedure48 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_23_in_mainRoutine58 = new BitSet(new long[]{0x0000000010000000L});
+	public static final BitSet FOLLOW_block_in_mainRoutine65 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_28_in_block74 = new BitSet(new long[]{0x0000000026300010L});
+	public static final BitSet FOLLOW_statement_in_block82 = new BitSet(new long[]{0x0000000026300010L});
+	public static final BitSet FOLLOW_29_in_block90 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_inSt_in_statement102 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_parseSt_in_statement107 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_assSt_in_statement112 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_foreachSt_in_statement117 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_printSt_in_statement122 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_21_in_inSt131 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_STRING_in_inSt134 = new BitSet(new long[]{0x0000000010000000L});
+	public static final BitSet FOLLOW_block_in_inSt141 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ID_in_assSt149 = new BitSet(new long[]{0x0000000000004000L});
+	public static final BitSet FOLLOW_14_in_assSt151 = new BitSet(new long[]{0x0000000000000550L});
+	public static final BitSet FOLLOW_exp_in_assSt153 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_13_in_assSt155 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_20_in_foreachSt168 = new BitSet(new long[]{0x0000000000000400L});
+	public static final BitSet FOLLOW_selector_in_foreachSt170 = new BitSet(new long[]{0x0000000010000000L});
+	public static final BitSet FOLLOW_block_in_foreachSt179 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_25_in_parseSt190 = new BitSet(new long[]{0x0000000000080000L});
+	public static final BitSet FOLLOW_19_in_parseSt192 = new BitSet(new long[]{0x0000000000000550L});
+	public static final BitSet FOLLOW_exp_in_parseSt194 = new BitSet(new long[]{0x0000000000040000L});
+	public static final BitSet FOLLOW_18_in_parseSt196 = new BitSet(new long[]{0x0000000000000010L});
+	public static final BitSet FOLLOW_ID_in_parseSt198 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_13_in_parseSt200 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_25_in_parseSt211 = new BitSet(new long[]{0x0000000000400000L});
+	public static final BitSet FOLLOW_22_in_parseSt213 = new BitSet(new long[]{0x0000000000000550L});
+	public static final BitSet FOLLOW_exp_in_parseSt215 = new BitSet(new long[]{0x0000000000040000L});
+	public static final BitSet FOLLOW_18_in_parseSt217 = new BitSet(new long[]{0x0000000000000010L});
+	public static final BitSet FOLLOW_ID_in_parseSt219 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_13_in_parseSt221 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_25_in_parseSt226 = new BitSet(new long[]{0x0000000001000000L});
+	public static final BitSet FOLLOW_24_in_parseSt228 = new BitSet(new long[]{0x0000000000000550L});
+	public static final BitSet FOLLOW_exp_in_parseSt230 = new BitSet(new long[]{0x0000000000040000L});
+	public static final BitSet FOLLOW_18_in_parseSt232 = new BitSet(new long[]{0x0000000000000010L});
+	public static final BitSet FOLLOW_ID_in_parseSt234 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_13_in_parseSt236 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_26_in_printSt245 = new BitSet(new long[]{0x0000000000000550L});
+	public static final BitSet FOLLOW_exp_in_printSt247 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_13_in_printSt249 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ID_in_exp268 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STRING_in_exp275 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_selector_in_exp282 = new BitSet(new long[]{0x0000000000008000L});
+	public static final BitSet FOLLOW_15_in_exp283 = new BitSet(new long[]{0x0000000000000010L});
+	public static final BitSet FOLLOW_ID_in_exp284 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_THIS_in_exp290 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_10_in_selector306 = new BitSet(new long[]{0x0000000000000040L});
+	public static final BitSet FOLLOW_STRING_in_selector308 = new BitSet(new long[]{0x0000000000000800L});
+	public static final BitSet FOLLOW_11_in_selector310 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_TAG_in_xPath322 = new BitSet(new long[]{0x0000000000011002L});
+	public static final BitSet FOLLOW_16_in_xPath324 = new BitSet(new long[]{0x0000000000000020L});
+	public static final BitSet FOLLOW_NUMBER_in_xPath325 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_17_in_xPath326 = new BitSet(new long[]{0x0000000000001002L});
+	public static final BitSet FOLLOW_12_in_xPath330 = new BitSet(new long[]{0x0000000000000080L});
+	public static final BitSet FOLLOW_TAG_in_xPath331 = new BitSet(new long[]{0x0000000000011002L});
+	public static final BitSet FOLLOW_16_in_xPath333 = new BitSet(new long[]{0x0000000000000020L});
+	public static final BitSet FOLLOW_NUMBER_in_xPath334 = new BitSet(new long[]{0x0000000000020000L});
+	public static final BitSet FOLLOW_17_in_xPath335 = new BitSet(new long[]{0x0000000000001002L});
 }

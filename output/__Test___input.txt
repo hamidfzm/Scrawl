@@ -1,12 +1,12 @@
 main{
 in "http://rishe.co"{
-foreach (DIV.DIV.P){
-parse first t by getUserInfo;
+foreach ("DIV.DIV.P"){
+parse first this by getUserInfo;
 }
 }
 }
 
 procedure getUserInfo{
-ta = (DIV.P)@text;
+ta = ("DIV.P")@text;
 print ta;
 }
