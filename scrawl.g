@@ -50,30 +50,23 @@ statement returns [String code]:
     |printSt { $code = $printSt.code; };
 	
 reqSt returns [String code] :
-	getReqSt { $code = getReqSt.code; }
-	|postReqSt { $code = postReqSt.code; };
+	getReqSt { $code = $getReqSt.code; }
+	|postReqSt { $code = $postReqSt.code; };
 
 getReqSt returns [String code]:
-	GET STRING {
+	GET STRING block{		
 			$code =
-				"ldc" + $STRING.value + "\n"
-				+ "invokestatic ir/ac/iust/scrawl/scrawlib/Helper.Get(Ljava/lang/String;)Lorg/jsoup/nodes/Document \n";
-				+ "astore_1 \n";
-		}
-		block;
+				"ldc" + $STRING.text + "\n"
+				+ "invokestatic ir/ac/iust/scrawl/scrawlib/Helper.Get(Ljava/lang/String;)Lorg/jsoup/nodes/Document \n"
+				+ "astore_1 \n"
+				+ $block.code;
+		};
+
 postReqSt returns [String code]:
 	POST STRING {
-		scope += 1;
-		System.out.println($dictionary.value);
-		System.out.println("resp"+scope+", err1_"+scope+" := http.PostForm("+$STRING.text+","+$dictionary.name+")");
-		System.out.println("doc"+scope+", err2_"+scope+" := goquery.NewDocumentFromResponse(resp"+scope+")");
-		System.out.println("_ = doc"+scope+"");
-		System.out.print("if err1_"+scope+" == nil && err2_"+scope+" == nil");
-		thisDoc = "doc"+scope ;
 		}
 		block;
 
-dictionary
 assSt :	ID '=' exp ';'
 		{
 		};
