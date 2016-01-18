@@ -53,7 +53,7 @@ reqSt	:	GET STRING {
 			thisDoc = "doc"+scope ;
 			} block
 		
-		| POST STRING dictionary{
+		| POST STRING {
 			scope += 1;
 			System.out.println($dictionary.value);
 			System.out.println("resp"+scope+", err1_"+scope+" := http.PostForm("+$STRING.text+","+$dictionary.name+")");
@@ -63,7 +63,7 @@ reqSt	:	GET STRING {
 			thisDoc = "doc"+scope ;
 			}block;
 
-
+dictionary
 assSt :	ID '=' exp ';'
 		{
 			String temp = $ID.text ;
