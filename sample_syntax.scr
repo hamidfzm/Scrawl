@@ -1,0 +1,19 @@
+main{
+	post "http://teamfantasy.varzesh3.com/inc/ajax/usr_login_content/"
+		[
+			"txt_username_login":"az.bardia13@gmail.com",
+			"txt_password_login":"09197386277",
+			"cb_rm":"yes"
+		]
+	{}
+	get "http://rishe.co"{
+		foreach ("li"){
+			print this@text;
+		}
+	}
+}
+
+procedure getUserInfo{
+	ta = ("DIV.P")@text;
+	print ta;
+}
