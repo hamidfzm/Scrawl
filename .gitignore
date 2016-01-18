@@ -2,10 +2,8 @@ output
 *~
 .idea/
 .DS_Store
-jasmin.jar
 .class
 __Test__*
-*.j
 *.class
 *.bc
 out
