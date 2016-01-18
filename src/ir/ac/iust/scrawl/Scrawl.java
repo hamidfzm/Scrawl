@@ -20,9 +20,9 @@ public class Scrawl {
         String bytecode = "";
 
         // parse code with generated parser
-        scrawlLexer lex = new scrawlLexer(new ANTLRFileStream("/home/bardia/scrawl/__Test___input.txt", "UTF8"));
+        ScrawlLexer lex = new ScrawlLexer(new ANTLRFileStream("/home/bardia/scrawl/__Test___input.txt", "UTF8"));
         CommonTokenStream tokens = new CommonTokenStream(lex);
-        scrawlParser g = new scrawlParser(tokens);
+        ScrawlParser g = new ScrawlParser(tokens);
         try {
             bytecode = g.root();
         } catch (RecognitionException e) {
