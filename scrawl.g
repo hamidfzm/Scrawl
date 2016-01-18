@@ -55,8 +55,10 @@ reqSt returns [String code] :
 
 getReqSt returns [String code]:
 	GET STRING {
-			$code = "";
-
+			$code =
+				"ldc" + $STRING.value + "\n"
+				+ "invokestatic ir/ac/iust/scrawl/scrawlib/Helper.Get(Ljava/lang/String;)Lorg/jsoup/nodes/Document \n";
+				+ "astore_1 \n";
 		}
 		block;
 postReqSt returns [String code]:
