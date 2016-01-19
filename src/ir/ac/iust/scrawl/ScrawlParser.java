@@ -114,8 +114,6 @@ public class ScrawlParser extends Parser {
 					break loop1;
 				}
 			}
-
-			 System.out.println(code);
 			}
 
 		}

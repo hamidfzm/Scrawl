@@ -25,7 +25,7 @@ procedure returns [String code]:
     'procedure' ID block;
 
 mainRoutine returns [String code]:
-    'main' block { $code = ".class public Scrawl.j \n"
+    'main' block { $code = ".class public Scrawl \n"
                      + ".super java/lang/Object \n"
 
                      + ".method public <init>()V \n"
