@@ -19,6 +19,7 @@ grammar Scrawl;
         STRING,
         DOCUMENT,
         ELEMENT,
+        INTEGER,
     }
     
 
@@ -148,30 +149,51 @@ parseSt	:	'parse' 'first' exp 'by' ID ';'
 printSt returns [String code]:
     'print' exp ';' 
     {
+    	String type = "";
+    	switch ($exp.type){
+    	    case INTEGER:
+    	        type = "I";
+    	        break;
+    	    case STRING:
+    	        type = "Ljava/lang/String;";
+    	        break;
+    	}
+ 
         $code = "getstatic java/lang/System/out Ljava/io/PrintStream; \n"
             + $exp.code
-            + "invokevirtual  java/io/PrintStream/println(Ljava/lang/String;)V \n";
+            + "invokevirtual  java/io/PrintStream/println(" + type + ")V \n";
     } ;
 
 exp returns [String code, Type type]:
     ID
         {
             $code = "aload_"+ +getLocalIndex($ID.text)+"\n";
+            $type = get($ID.text).getType();
         }
     |STRING
         {
             $code = "ldc "+ $STRING.text  + " \n";
             $type = Type.STRING;
         }
-    |selector'@'(TEXT{$code=$selector.value+".First().Text()";}
-    |ID{$code=$selector.value+".First().Attr(\""+$ID.text+"\")";});
+    |integer
+        {
+            if ( -128 < $integer.value && $integer.value < 128){
+            	$code = "bipush "+ $integer.value  + " \n";
+            } else if ( -32768 < $integer.value && $integer.value < 32767){
+            	$code = "sipush "+ $integer.value  + " \n";
+            } else {
+            	$code = "ldc "+ $integer.value  + " \n";
+            }
+            
+            $type = Type.INTEGER;
+        }
+    |selector'@'(TEXT{$code="";}
+    |ID{$code=$selector.value;});
 
 selector returns[String value]	:
 		'(' STRING ')' {$value=thisDoc+".Find("+$STRING.text+")";}
 		| THIS {$value=thisDoc;};
 		
-		
-xPath	:	TAG('['NUMBER']')?('.'TAG('['NUMBER']')?)*;
 
 
 dictionary returns[String name, String value]
@@ -184,6 +206,9 @@ dictionary returns[String name, String value]
 			 (',' k2=STRING 
 			  ':' v2=STRING{$value+=$name+".Add("+$k2.text+","+$v2.text+")\n";})*)?
 		']';
+
+integer returns[Integer value]:
+	INTEGER {$value = Integer.valueOf($INTEGER.text);};
 
 WS  :   ( ' '
         | '\t'
@@ -206,7 +231,13 @@ ID	:	 ('a'..'z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 
 TAG	:	('A'..'Z')+;
 
-NUMBER	:	'1'..'9' '0'..'9'+ ;
+DIGIT	:	'0'..'9';
+
+INTEGER: DIGIT+; 
+
+COMMENT	: '/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;};
+   
+LINE_COMMENT: '//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;};
 
 
 
