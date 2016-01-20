@@ -11,17 +11,17 @@ grammar Scrawl;
 }
 
 @members{
-	int scope=0;
+	int blockLvl = 0;
 	
 	String thisDoc;
-	
-    public enum Type{
+
+	// ****************
+public enum Type{
         STRING,
         DOCUMENT,
         ELEMENT,
         INTEGER,
     }
-    
 
     public class Info {
         private String name;
@@ -37,13 +37,15 @@ grammar Scrawl;
         public Type getType() {
             return type;
         }
+
+        public int getLocal(){return local;}
     }
 
     private HashMap<String, Info> id2Info;
     private HashMap<Integer, Info> local2Info;
     private static final int MAX_LOCAL_VAR = 200;
 
-    public void put(String id,Type type){
+    public int put(String id,Type type){
         Info info;
         for(int i=0;i<MAX_LOCAL_VAR;i++) {
             if(!local2Info.containsKey(i)){
@@ -51,18 +53,25 @@ grammar Scrawl;
                 info.local = i;
                 local2Info.put(i,info);
                 id2Info.put(id,info);
-                break;
+                return i;
             }
         }
+        return -1;
     }
 
     public Info get(String id){
         return id2Info.get(id);
     }
 
+    public void remove(String id){
+        if(id2Info.containsKey(id))
+            id2Info.remove(id);
+    }
+
     public int getLocalIndex(String id){
         return id2Info.get(id).local;
     }
+    //*********
 
 }
 
@@ -81,7 +90,7 @@ procedure returns [String code]:
     			     + $block.code
 	                     + "return \n"
 	                     + ".end method \n\n";
-    		     }; 
+    		     };
 
 mainRoutine returns [String code]:
     'main' block { $code = ".class public Scrawlout \n"
@@ -102,9 +111,9 @@ mainRoutine returns [String code]:
                      };
 
 block returns [String code]:
-    '{'	 { $code = ""; }
+    '{'	{ $code = ""; blockLvl++; }
              (statement {$code += $statement.code;})*
-    '}';
+    '}' { remove("doc"+blockLvl); blockLvl--;};
 
 statement returns [String code]:
     reqSt { $code = $reqSt.code; }
@@ -118,12 +127,14 @@ reqSt returns [String code] :
 	|postReqSt { $code = $postReqSt.code; };
 
 getReqSt returns [String code]:
-	GET exp block{		
+	GET exp 
+		{
+			put("doc"+(blockLvl+1),$exp.type);
 			$code = $exp.code
-				+ "invokestatic ir/ac/iust/scrawl/Helper/Get(Ljava/lang/String;)Lorg/jsoup/nodes/Document; \n"
-				+ "astore_1 \n"
-				+ $block.code;
-		};
+				+ "invokestatic ir/ac/iust/scrawl/scrawlib/Helper/Get(Ljava/lang/String;)Lorg/jsoup/nodes/Document; \n"
+				+ "astore_"+getLocalIndex("doc"+(blockLvl+1))+" \n";
+		}
+	block{$code += $block.code;};
 
 postReqSt returns [String code]:
 	POST STRING {
@@ -167,14 +178,20 @@ printSt returns [String code]:
 exp returns [String code, Type type]:
     ID
         {
-            $code = "aload_"+ +getLocalIndex($ID.text)+"\n";
-            $type = get($ID.text).getType();
+            Info info = get($ID.text);
+            $code = "aload_"+info.getLocal()+"\n";
+            $type = info.getType();
         }
     |STRING
         {
             $code = "ldc "+ $STRING.text  + " \n";
             $type = Type.STRING;
         }
+    |THIS
+    	{
+    		$code="aload_"+getLocalIndex("doc"+blockLvl)+"\n";
+    		$type=Type.DOCUMENT;
+    	}
     |integer
         {
             if ( -128 < $integer.value && $integer.value < 128){
@@ -187,8 +204,7 @@ exp returns [String code, Type type]:
             
             $type = Type.INTEGER;
         }
-    |selector'@'(TEXT{$code="";}
-    |ID{$code=$selector.value;});
+    |selector'@'TEXT{$code="";};
 
 selector returns[String value]	:
 		'(' STRING ')' {$value=thisDoc+".Find("+$STRING.text+")";}
@@ -196,9 +212,9 @@ selector returns[String value]	:
 		
 
 
-dictionary returns[String name, String value]
-	:	'[' 
-			{ $name = "v"+scope; $value = "v"+scope+" := url.Values{}\n";}
+dictionary returns[String name, String value]:
+	'['
+			{ $name = "v"+blockLvl; $value = "v"+blockLvl+" := url.Values{}\n";}
 			
 			{String key;}
 			(k1=STRING 
