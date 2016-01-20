@@ -27,6 +27,8 @@ public class SymbolTable {
         public Type getType() {
             return type;
         }
+
+        public int getLocal(){return local;}
     }
 
     private HashMap<String, Info> id2Info;
@@ -38,7 +40,7 @@ public class SymbolTable {
         local2Info = new HashMap<>();
     }
 
-    public void put(String id,Type type){
+    public int put(String id,Type type){
         Info info;
         for(int i=0;i<MAX_LOCAL_VAR;i++) {
             if(!local2Info.containsKey(i)){
@@ -46,13 +48,19 @@ public class SymbolTable {
                 info.local = i;
                 local2Info.put(i,info);
                 id2Info.put(id,info);
-                break;
+                return i;
             }
         }
+        return -1;
     }
 
     public Info get(String id){
         return id2Info.get(id);
+    }
+
+    public void remove(String id){
+        if(id2Info.containsKey(id))
+            id2Info.remove(id);
     }
 
     public int getLocalIndex(String id){
