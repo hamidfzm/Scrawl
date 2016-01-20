@@ -20,10 +20,16 @@ root  returns [String code]:
     mainRoutine{$code = $mainRoutine.code;} (procedure{$code += $procedure.code;})* ;
 
 procedure returns [String code]:
-    'procedure' ID block;
+    'procedure' ID block { $code = ".method private static " + $ID.text + "()V \n"
+	                     + ".limit stack 2 \n"
+	                     + ".limit locals 2 \n"
+    			     + $block.code
+	                     + "return \n"
+	                     + ".end method \n\n";
+    		     };
 
 mainRoutine returns [String code]:
-    'main' block { $code = ".class public Scrawl \n"
+    'main' block { $code = ".class public Scrawl.j \n"
                      + ".super java/lang/Object \n"
 
                      + ".method public <init>()V \n"
@@ -37,7 +43,7 @@ mainRoutine returns [String code]:
                      + ".limit locals 2 \n"
                      + $block.code
                      + "return \n"
-                     + ".end method \n";
+                     + ".end method \n\n";
                      };
 
 block returns [String code]:
@@ -57,10 +63,9 @@ reqSt returns [String code] :
 	|postReqSt { $code = $postReqSt.code; };
 
 getReqSt returns [String code]:
-	GET STRING block{		
-			$code =
-				"ldc" + $STRING.text + "\n"
-				+ "invokestatic ir/ac/iust/scrawl/scrawlib/Helper.Get(Ljava/lang/String;)Lorg/jsoup/nodes/Document \n"
+	GET exp block{		
+			$code = $exp.code
+				+ "invokestatic ir/ac/iust/scrawl/Helper/Get(Ljava/lang/String;)Lorg/jsoup/nodes/Document; \n"
 				+ "astore_1 \n"
 				+ $block.code;
 		};
@@ -74,30 +79,25 @@ assSt :	ID '=' exp ';'
 		{
 		};
 
-foreachSt
-	:	'foreach' selector 
-		{
-			scope+=1;
-			System.out.print($selector.value+".Each(func(i int, "+thisDoc+" *goquery.Selection) ");
-		}
-		block {System.out.println(")"); scope -=1;};
+foreachSt:
+    'foreach' selector block;
 	
 parseSt	:	'parse' 'first' exp 'by' ID ';' 
-			{ System.out.println($ID.text+"("+$exp.value+")");}
+			{ System.out.println($ID.text+"("+$exp.code+")");}
 	|	'parse' 'last' exp 'by' ID ';'
-			{ System.out.println($ID.text+"("+$exp.value+")");};
-	
+			{ System.out.println($ID.text+"("+$exp.code+")");};
+
 printSt returns [String code]:
     'print' exp ';' {$code = "getstatic java/lang/System/out Ljava/io/PrintStream; \n"
-                      + "ldc "+ $exp.value  + " \n"
+                      + $exp.code
                       + "invokevirtual  java/io/PrintStream/println(Ljava/lang/String;)V \n";
                       } ;
 
-exp returns [String value]:
-    ID {$value = $ID.text;}|STRING {$value = $STRING.text;}
-    |selector'@'(TEXT{$value=$selector.value+".First().Text()";}
-    |ID{$value=$selector.value+".First().Attr(\""+$ID.text+"\")";});
-	
+exp returns [String code]:
+    ID {$code = $ID.text;}|STRING {$code = "ldc "+ $STRING.text  + " \n";}
+    |selector'@'(TEXT{$code=$selector.value+".First().Text()";}
+    |ID{$code=$selector.value+".First().Attr(\""+$ID.text+"\")";});
+
 selector returns[String value]	:
 		'(' STRING ')' {$value=thisDoc+".Find("+$STRING.text+")";}
 		| THIS {$value=thisDoc;};

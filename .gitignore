@@ -6,4 +6,6 @@ __Test__*
 *.class
 *.bc
 out
+*.iml
+
 output.jar
