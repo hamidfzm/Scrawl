@@ -1,12 +1,9 @@
-// $ANTLR 3.5.1 /home/bardia/scrawl/Scrawl.g 2016-01-18 21:25:08
+// $ANTLR 3.5.1 /home/bardia/scrawl/Scrawl.g 2016-01-19 20:32:43
 
 	package ir.ac.iust.scrawl;
 
 
 import org.antlr.runtime.*;
-import java.util.Stack;
-import java.util.List;
-import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class ScrawlLexer extends Lexer {
@@ -471,8 +468,8 @@ public class ScrawlLexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/Scrawl.g:122:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-			// /home/bardia/scrawl/Scrawl.g:122:9: ( ' ' | '\\t' | '\\r' | '\\n' )
+			// /home/bardia/scrawl/Scrawl.g:120:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+			// /home/bardia/scrawl/Scrawl.g:120:9: ( ' ' | '\\t' | '\\r' | '\\n' )
 			{
 			if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
 				input.consume();
@@ -499,8 +496,8 @@ public class ScrawlLexer extends Lexer {
 		try {
 			int _type = GET;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/Scrawl.g:129:5: ( 'get' )
-			// /home/bardia/scrawl/Scrawl.g:129:7: 'get'
+			// /home/bardia/scrawl/Scrawl.g:127:5: ( 'get' )
+			// /home/bardia/scrawl/Scrawl.g:127:7: 'get'
 			{
 			match("get"); 
 
@@ -520,8 +517,8 @@ public class ScrawlLexer extends Lexer {
 		try {
 			int _type = POST;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/Scrawl.g:130:6: ( 'post' )
-			// /home/bardia/scrawl/Scrawl.g:130:8: 'post'
+			// /home/bardia/scrawl/Scrawl.g:128:6: ( 'post' )
+			// /home/bardia/scrawl/Scrawl.g:128:8: 'post'
 			{
 			match("post"); 
 
@@ -541,8 +538,8 @@ public class ScrawlLexer extends Lexer {
 		try {
 			int _type = PUT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/Scrawl.g:131:5: ( 'put' )
-			// /home/bardia/scrawl/Scrawl.g:131:7: 'put'
+			// /home/bardia/scrawl/Scrawl.g:129:5: ( 'put' )
+			// /home/bardia/scrawl/Scrawl.g:129:7: 'put'
 			{
 			match("put"); 
 
@@ -562,8 +559,8 @@ public class ScrawlLexer extends Lexer {
 		try {
 			int _type = DELETE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/Scrawl.g:132:8: ( 'delete' )
-			// /home/bardia/scrawl/Scrawl.g:132:10: 'delete'
+			// /home/bardia/scrawl/Scrawl.g:130:8: ( 'delete' )
+			// /home/bardia/scrawl/Scrawl.g:130:10: 'delete'
 			{
 			match("delete"); 
 
@@ -583,8 +580,8 @@ public class ScrawlLexer extends Lexer {
 		try {
 			int _type = TEXT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/Scrawl.g:133:6: ( 'text' )
-			// /home/bardia/scrawl/Scrawl.g:133:8: 'text'
+			// /home/bardia/scrawl/Scrawl.g:131:6: ( 'text' )
+			// /home/bardia/scrawl/Scrawl.g:131:8: 'text'
 			{
 			match("text"); 
 
@@ -604,8 +601,8 @@ public class ScrawlLexer extends Lexer {
 		try {
 			int _type = THIS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/Scrawl.g:135:6: ( 'this' )
-			// /home/bardia/scrawl/Scrawl.g:135:8: 'this'
+			// /home/bardia/scrawl/Scrawl.g:133:6: ( 'this' )
+			// /home/bardia/scrawl/Scrawl.g:133:8: 'this'
 			{
 			match("this"); 
 
@@ -625,11 +622,11 @@ public class ScrawlLexer extends Lexer {
 		try {
 			int _type = STRING;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/Scrawl.g:137:8: ( '\"' ( . )* '\"' )
-			// /home/bardia/scrawl/Scrawl.g:137:11: '\"' ( . )* '\"'
+			// /home/bardia/scrawl/Scrawl.g:135:8: ( '\"' ( . )* '\"' )
+			// /home/bardia/scrawl/Scrawl.g:135:11: '\"' ( . )* '\"'
 			{
 			match('\"'); 
-			// /home/bardia/scrawl/Scrawl.g:137:15: ( . )*
+			// /home/bardia/scrawl/Scrawl.g:135:15: ( . )*
 			loop1:
 			while (true) {
 				int alt1=2;
@@ -643,7 +640,7 @@ public class ScrawlLexer extends Lexer {
 
 				switch (alt1) {
 				case 1 :
-					// /home/bardia/scrawl/Scrawl.g:137:15: .
+					// /home/bardia/scrawl/Scrawl.g:135:15: .
 					{
 					matchAny(); 
 					}
@@ -671,8 +668,8 @@ public class ScrawlLexer extends Lexer {
 		try {
 			int _type = ID;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/Scrawl.g:139:4: ( ( 'a' .. 'z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-			// /home/bardia/scrawl/Scrawl.g:139:7: ( 'a' .. 'z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+			// /home/bardia/scrawl/Scrawl.g:137:4: ( ( 'a' .. 'z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+			// /home/bardia/scrawl/Scrawl.g:137:7: ( 'a' .. 'z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
 			{
 			if ( input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 				input.consume();
@@ -682,7 +679,7 @@ public class ScrawlLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// /home/bardia/scrawl/Scrawl.g:139:22: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+			// /home/bardia/scrawl/Scrawl.g:137:22: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
 			loop2:
 			while (true) {
 				int alt2=2;
@@ -727,10 +724,10 @@ public class ScrawlLexer extends Lexer {
 		try {
 			int _type = TAG;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/Scrawl.g:141:5: ( ( 'A' .. 'Z' )+ )
-			// /home/bardia/scrawl/Scrawl.g:141:7: ( 'A' .. 'Z' )+
+			// /home/bardia/scrawl/Scrawl.g:139:5: ( ( 'A' .. 'Z' )+ )
+			// /home/bardia/scrawl/Scrawl.g:139:7: ( 'A' .. 'Z' )+
 			{
-			// /home/bardia/scrawl/Scrawl.g:141:7: ( 'A' .. 'Z' )+
+			// /home/bardia/scrawl/Scrawl.g:139:7: ( 'A' .. 'Z' )+
 			int cnt3=0;
 			loop3:
 			while (true) {
@@ -779,11 +776,11 @@ public class ScrawlLexer extends Lexer {
 		try {
 			int _type = NUMBER;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/bardia/scrawl/Scrawl.g:143:8: ( '1' .. '9' ( '0' .. '9' )+ )
-			// /home/bardia/scrawl/Scrawl.g:143:10: '1' .. '9' ( '0' .. '9' )+
+			// /home/bardia/scrawl/Scrawl.g:141:8: ( '1' .. '9' ( '0' .. '9' )+ )
+			// /home/bardia/scrawl/Scrawl.g:141:10: '1' .. '9' ( '0' .. '9' )+
 			{
 			matchRange('1','9'); 
-			// /home/bardia/scrawl/Scrawl.g:143:19: ( '0' .. '9' )+
+			// /home/bardia/scrawl/Scrawl.g:141:19: ( '0' .. '9' )+
 			int cnt4=0;
 			loop4:
 			while (true) {

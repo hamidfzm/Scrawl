@@ -17,9 +17,7 @@ grammar Scrawl;
 }
 
 root  returns [String code]:
-    mainRoutine{$code = $mainRoutine.code;} (procedure{$code += $procedure.code;})*
-    
-    { System.out.println(code);} ;
+    mainRoutine{$code = $mainRoutine.code;} (procedure{$code += $procedure.code;})* ;
 
 procedure returns [String code]:
     'procedure' ID block;
