@@ -17,7 +17,7 @@ grammar Scrawl;
 }
 
 root  returns [String code]:
-    mainRoutine{$code = $mainRoutine.code;} (procedure{$code += $procedure.code;})* ;
+    mainRoutine{$code = $mainRoutine.code; } (procedure{$code += $procedure.code;})*  {System.out.print($code);};
 
 procedure returns [String code]:
     'procedure' ID block { $code = ".method private static " + $ID.text + "()V \n"
@@ -29,7 +29,7 @@ procedure returns [String code]:
     		     };
 
 mainRoutine returns [String code]:
-    'main' block { $code = ".class public Scrawl.j \n"
+    'main' block { $code = ".class public Scrawlout \n"
                      + ".super java/lang/Object \n"
 
                      + ".method public <init>()V \n"
