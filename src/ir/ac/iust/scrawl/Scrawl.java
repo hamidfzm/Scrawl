@@ -1,6 +1,5 @@
 package ir.ac.iust.scrawl;
 
-import ir.ac.iust.scrawl.scrawlib.Helper;
 import jasmin.Main;
 import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -19,9 +18,6 @@ import java.util.jar.Manifest;
  */
 public class Scrawl {
     public static void main(String[] args) throws IOException {
-
-        new Helper();
-
         String inputPath = "";
         String outputName = "runnable";
         boolean jar = false;

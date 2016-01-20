@@ -3,7 +3,7 @@ grammar Scrawl;
 
 @parser::header {
 	package ir.ac.iust.scrawler.parser;
-	 import java.util.HashMap;
+	import java.util.HashMap;
 }
 
 @lexer::header {
@@ -12,11 +12,65 @@ grammar Scrawl;
 
 @members{
 	int scope=0;
+	
 	String thisDoc;
-	HashMap symbolTable = new HashMap();
+	
+    public enum Type{
+        STRING,
+        DOCUMENT,
+        ELEMENT,
+    }
+    
+
+    public class Info {
+        private String name;
+        private int local;
+        private Type type;
+        private int block;
+
+        public Info(String name, Type type){
+            this.name = name;
+            this.type = type;
+        }
+
+        public Type getType() {
+            return type;
+        }
+    }
+
+    private HashMap<String, Info> id2Info;
+    private HashMap<Integer, Info> local2Info;
+    private static final int MAX_LOCAL_VAR = 200;
+
+    public void put(String id,Type type){
+        Info info;
+        for(int i=0;i<MAX_LOCAL_VAR;i++) {
+            if(!local2Info.containsKey(i)){
+                info = new Info(id,type);
+                info.local = i;
+                local2Info.put(i,info);
+                id2Info.put(id,info);
+                break;
+            }
+        }
+    }
+
+    public Info get(String id){
+        return id2Info.get(id);
+    }
+
+    public int getLocalIndex(String id){
+        return id2Info.get(id).local;
+    }
+
 }
 
+
 root  returns [String code]:
+    {
+        id2Info = new HashMap<>();
+        local2Info = new HashMap<>();
+    }
     mainRoutine{$code = $mainRoutine.code; } (procedure{$code += $procedure.code;})*  {System.out.print($code);};
 
 procedure returns [String code]:
@@ -26,7 +80,7 @@ procedure returns [String code]:
     			     + $block.code
 	                     + "return \n"
 	                     + ".end method \n\n";
-    		     };
+    		     }; 
 
 mainRoutine returns [String code]:
     'main' block { $code = ".class public Scrawlout \n"
@@ -53,7 +107,7 @@ block returns [String code]:
 
 statement returns [String code]:
     reqSt { $code = $reqSt.code; }
-    |assSt
+    |assSt{ $code = $assSt.code; }
     |foreachSt
     |parseSt
     |printSt { $code = $printSt.code; };
@@ -75,8 +129,12 @@ postReqSt returns [String code]:
 		}
 		block;
 
-assSt :	ID '=' exp ';'
+assSt returns[String code]:
+	ID '=' exp ';'
 		{
+			put($ID.text,$exp.type);
+			$code = $exp.code
+				+ "astore_"+getLocalIndex($ID.text)+"\n";
 		};
 
 foreachSt:
@@ -88,13 +146,23 @@ parseSt	:	'parse' 'first' exp 'by' ID ';'
 			{ System.out.println($ID.text+"("+$exp.code+")");};
 
 printSt returns [String code]:
-    'print' exp ';' {$code = "getstatic java/lang/System/out Ljava/io/PrintStream; \n"
-                      + $exp.code
-                      + "invokevirtual  java/io/PrintStream/println(Ljava/lang/String;)V \n";
-                      } ;
+    'print' exp ';' 
+    {
+        $code = "getstatic java/lang/System/out Ljava/io/PrintStream; \n"
+            + $exp.code
+            + "invokevirtual  java/io/PrintStream/println(Ljava/lang/String;)V \n";
+    } ;
 
-exp returns [String code]:
-    ID {$code = $ID.text;}|STRING {$code = "ldc "+ $STRING.text  + " \n";}
+exp returns [String code, Type type]:
+    ID
+        {
+            $code = "aload_"+ +getLocalIndex($ID.text)+"\n";
+        }
+    |STRING
+        {
+            $code = "ldc "+ $STRING.text  + " \n";
+            $type = Type.STRING;
+        }
     |selector'@'(TEXT{$code=$selector.value+".First().Text()";}
     |ID{$code=$selector.value+".First().Attr(\""+$ID.text+"\")";});
 
