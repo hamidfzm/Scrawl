@@ -143,11 +143,19 @@ postReqSt returns [String code]:
 
 assSt returns[String code]:
 	ID '=' exp ';'
-		{
-			put($ID.text,$exp.type);
-			$code = $exp.code
-				+ "astore_"+getLocalIndex($ID.text)+"\n";
-		};
+	{
+		put($ID.text,$exp.type);
+		$code = $exp.code;
+		
+		switch($exp.type){
+    	    case INTEGER:
+    	        $code += "istore_"+getLocalIndex($ID.text)+"\n";
+    	        break;
+    	    case STRING:
+    	        $code += "astore_"+getLocalIndex($ID.text)+"\n";
+    	        break;
+		}
+	};
 
 foreachSt:
     'foreach' selector block;
@@ -179,8 +187,16 @@ exp returns [String code, Type type]:
     ID
         {
             Info info = get($ID.text);
-            $code = "aload_"+info.getLocal()+"\n";
             $type = info.getType();
+            
+            switch($type){
+    	    case INTEGER:
+    	        $code = "iload_"+info.getLocal()+"\n";
+    	        break;
+    	    case STRING:
+    	        $code = "aload_"+info.getLocal()+"\n";
+    	        break;
+            }
         }
     |STRING
         {
