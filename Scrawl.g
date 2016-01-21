@@ -215,7 +215,7 @@ exp returns [String code, Type type]:
     	    case INTEGER:
     	        $code = "iload_"+info.getLocal()+"\n";
     	        break;
-    	    case STRING:
+    	    default:
     	        $code = "aload_"+info.getLocal()+"\n";
     	        break;
             }
