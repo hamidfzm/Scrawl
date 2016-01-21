@@ -21,6 +21,8 @@ public enum Type{
         DOCUMENT,
         ELEMENT,
         INTEGER,
+        FLOAT,
+        BOOLEAN,
     }
 
     public class Info {
@@ -249,23 +251,44 @@ WS  :   ( ' '
         ) {$channel=HIDDEN;}
     ;
 
-GET	:	'get';
+GET		:	'get';
 POST	:	'post';
-PUT	:	'put';
+PUT		:	'put';
 DELETE	:	'delete';
 TEXT	:	'text';
 
 THIS	:	'this';
 
-STRING	:	 '"' .* '"';
+STRING : '"' (ESC | ~('\\'|'"'))* '"';
+protected ESC : '\\' ('n' | 'r');
 
-ID	:	 ('a'..'z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
+ID : SS (SS | '0'..'9')* ;
+fragment SS : 'a'..'z' | 'A'..'Z' | '_' ;
 
-TAG	:	('A'..'Z')+;
+LBR :  '(' ;
+RBR :  ')' ;
+PLS :  '+' ;
+MNS :  '-' ;
+MLP :  '*' ;
+DIV :  '/' ;
+PWR :  '^' ;
+
+LSS :  '<'  ;
+LSQ :  '<=' ;
+GRT :  '>'  ;
+GRQ :  '>=' ;
+EQL :  '==' ;
+NEQ :  '!=' ;
+AND :  '&&' ;
+OR  :  '||' ;
+NOT :  '!'  ;
 
 DIGIT	:	'0'..'9';
 
 INTEGER: DIGIT+; 
+
+FLOAT : INTEGER '.' INTEGER* EXP? | '.' INTEGER EXP? | INTEGER EXP;
+fragment EXP : ('e'|'E') (PLS | MNS)? INTEGER;
 
 COMMENT	: '/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;};
    
