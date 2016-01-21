@@ -4,6 +4,7 @@ grammar Scrawl;
 @parser::header {
 	package ir.ac.iust.scrawler.parser;
 	import java.util.HashMap;
+	import java.util.Stack;
 }
 
 @lexer::header {
@@ -11,8 +12,7 @@ grammar Scrawl;
 }
 
 @members{
-	int blockLvl = 0;
-	
+	Stack<Integer> block = new Stack<>();
 	String thisDoc;
 
 	// ****************
@@ -71,7 +71,21 @@ public enum Type{
     public int getLocalIndex(String id){
         return id2Info.get(id).local;
     }
+
+
+    public void __debug__printKeys(){
+        for(String s: id2Info.keySet())
+            System.out.println(s);
+    }
     //*********
+
+    String whatIsThis(){
+    	return "doc"+block.size()+"_"+block.elementAt(block.size()-2);
+    }
+
+    String whatIsThis1(){
+    	return "doc"+(block.size()+1)+"_"+block.peek();
+    }
 
 }
 
@@ -80,6 +94,7 @@ root  returns [String code]:
     {
         id2Info = new HashMap<>();
         local2Info = new HashMap<>();
+        block.push(0);
     }
     mainRoutine{$code = $mainRoutine.code; } (procedure{$code += $procedure.code;})*  {System.out.print($code);};
 
@@ -111,9 +126,12 @@ mainRoutine returns [String code]:
                      };
 
 block returns [String code]:
-    '{'	{ $code = ""; blockLvl++; }
+    '{'	{
+    		$code = "";
+    		block.push(0);
+    	}
              (statement {$code += $statement.code;})*
-    '}' { remove("doc"+blockLvl); blockLvl--;};
+    '}' { remove(whatIsThis()); block.pop();};
 
 statement returns [String code]:
     reqSt { $code = $reqSt.code; }
@@ -129,10 +147,12 @@ reqSt returns [String code] :
 getReqSt returns [String code]:
 	GET exp 
 		{
-			put("doc"+(blockLvl+1),$exp.type);
+			int t = block.pop()+1;
+			block.push(t);
+			put(whatIsThis1(),$exp.type);
 			$code = $exp.code
 				+ "invokestatic ir/ac/iust/scrawl/scrawlib/Helper/Get(Ljava/lang/String;)Lorg/jsoup/nodes/Document; \n"
-				+ "astore_"+getLocalIndex("doc"+(blockLvl+1))+" \n";
+				+ "astore_"+getLocalIndex(whatIsThis1())+" \n";
 		}
 	block{$code += $block.code;};
 
@@ -151,7 +171,7 @@ assSt returns[String code]:
     	    case INTEGER:
     	        $code += "istore_"+getLocalIndex($ID.text)+"\n";
     	        break;
-    	    case STRING:
+    	    default:
     	        $code += "astore_"+getLocalIndex($ID.text)+"\n";
     	        break;
 		}
@@ -205,7 +225,7 @@ exp returns [String code, Type type]:
         }
     |THIS
     	{
-    		$code="aload_"+getLocalIndex("doc"+blockLvl)+"\n";
+    		$code="aload_"+getLocalIndex(whatIsThis())+"\n";
     		$type=Type.DOCUMENT;
     	}
     |integer
@@ -227,17 +247,10 @@ selector returns[String value]	:
 		| THIS {$value=thisDoc;};
 		
 
-
 dictionary returns[String name, String value]:
 	'['
-			{ $name = "v"+blockLvl; $value = "v"+blockLvl+" := url.Values{}\n";}
-			
-			{String key;}
-			(k1=STRING 
-			 ':' v1=STRING {$value+=$name+".Add("+$k1.text+","+$v1.text+")\n";}
-			 (',' k2=STRING 
-			  ':' v2=STRING{$value+=$name+".Add("+$k2.text+","+$v2.text+")\n";})*)?
-		']';
+
+	']';
 
 integer returns[Integer value]:
 	INTEGER {$value = Integer.valueOf($INTEGER.text);};

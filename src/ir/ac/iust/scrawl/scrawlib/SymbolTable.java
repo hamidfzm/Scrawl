@@ -66,4 +66,9 @@ public class SymbolTable {
     public int getLocalIndex(String id){
         return id2Info.get(id).local;
     }
+
+    public void __debug__printKeys(){
+        for(String s: id2Info.keySet())
+            System.out.println(s);
+    }
 }
