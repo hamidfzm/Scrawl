@@ -207,7 +207,7 @@ foreachSt returns[String code]:
     		String startLable = newLable();
     		String endLable = newLable();
     		$code = $exp.code
-    			+ "invokevirtual org/jsoup/select/Elements/iterator()Ljava/util/Iterator; \n";
+    			+ "invokevirtual org/jsoup/select/Elements/iterator()Ljava/util/Iterator; \n"
     			+ "astore_"+getLocalIndex(temp)+"\n"
     			+ startLable+":\n"
     			+ "aload_"+getLocalIndex(temp)+"\n"
