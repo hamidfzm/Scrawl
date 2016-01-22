@@ -206,7 +206,8 @@ foreachSt returns[String code]:
 			put(temp,Type.ELEMENTS);
     		String startLable = newLable();
     		String endLable = newLable();
-    		$code = $exp.code
+    		$code ="aload_"+getLocalIndex(whatIsThis())+"\n"
+			+ $exp.code
     			+ "invokevirtual org/jsoup/select/Elements/iterator()Ljava/util/Iterator; \n"
     			+ "astore_"+getLocalIndex(temp)+"\n"
     			+ startLable+":\n"
@@ -249,7 +250,52 @@ printSt returns [String code]:
     } ;
 
 exp returns [String code, Type type]:
-    ID
+    STRING
+        {
+            $code = "ldc "+ $STRING.text  + " \n";
+            $type = Type.STRING;
+        }
+    | variable { $code = $variable.code; $type = $variable.type;}
+        	(selector { $code += $selector.code; $type = Type.ELEMENTS;}
+    	(element { $code += $element.code; $type = Type.ELEMENT;}
+    	(attribute { $code += $attribute.code; $type = Type.STRING;}
+    	)?)?)? 
+    | integer
+        {
+            if ( -128 < $integer.value && $integer.value < 128){
+            	$code = "bipush "+ $integer.value  + " \n";
+            } else if ( -32768 < $integer.value && $integer.value < 32767){
+            	$code = "sipush "+ $integer.value  + " \n";
+            } else {
+            	$code = "ldc "+ $integer.value  + " \n";
+            }
+            
+            $type = Type.INTEGER;
+        }
+    |selector{$code = $selector.code; $type = Type.ELEMENTS;}
+        	(element { $code += $element.code; $type = Type.ELEMENT;}
+    	(attribute { $code += $attribute.code; $type = Type.STRING;}
+    	)?)?;
+    	
+element returns[String code]:
+	index {     	
+		$code = "iconst_"+Integer.valueOf($index.value) +"\n"
+    			+ "invokevirtual org/jsoup/select/Elements/get(I)Ljava/lang/Object;\n";
+    		};
+    		
+attribute returns[String code]:
+	'@'(TEXT
+    	{
+    		$code = "checkcast org/jsoup/nodes/Element \n"
+			+ "invokevirtual org/jsoup/nodes/Element/text()Ljava/lang/String; \n";
+    	}|ID{ 
+		$code = "checkcast org/jsoup/nodes/Element \n"
+			+ "ldc \""+$ID.text+"\"\n"
+			+ "invokevirtual org/jsoup/nodes/Element/attr(Ljava/lang/String;)Ljava/lang/String\n";
+    	});
+    	
+variable  returns [String code, Type type]:
+	ID
         {
             Info info = get($ID.text);
             $type = info.getType();
@@ -263,55 +309,18 @@ exp returns [String code, Type type]:
     	        break;
             }
         }
-    |STRING
-        {
-            $code = "ldc "+ $STRING.text  + " \n";
-            $type = Type.STRING;
-        }
     |THIS
     	{
     		$code="aload_"+getLocalIndex(whatIsThis())+"\n";
     		$type=Type.DOCUMENT;
-    	}
-    |integer
-        {
-            if ( -128 < $integer.value && $integer.value < 128){
-            	$code = "bipush "+ $integer.value  + " \n";
-            } else if ( -32768 < $integer.value && $integer.value < 32767){
-            	$code = "sipush "+ $integer.value  + " \n";
-            } else {
-            	$code = "ldc "+ $integer.value  + " \n";
-            }
-            
-            $type = Type.INTEGER;
-        }
-    |selector{$code = $selector.code; $type = Type.ELEMENTS;}
-    	( index
-    		{
-    			$code += "iconst_"+Integer.valueOf($index.value) +"\n"
-    				+ "invokevirtual org/jsoup/select/Elements/get(I)Ljava/lang/Object;\n";
-    			$type = Type.ELEMENT;
-    		}
-    	('@'(TEXT
-    		{
-    			$code += "checkcast org/jsoup/nodes/Element \n"
-				+ "invokevirtual org/jsoup/nodes/Element/text()Ljava/lang/String; \n";
-    			$type = Type.STRING;
-    		}|ID{
-    			$code += "checkcast org/jsoup/nodes/Element \n"
-    				+ "ldc \""+$ID.text+"\"\n"
-				+ "invokevirtual org/jsoup/nodes/Element/attr(Ljava/lang/String;)Ljava/lang/String\n";
-    			$type = Type.STRING;	
-    		})
-    	)?)?;
+    	};
     		
 index returns[String value]:
 	'[' INTEGER ']' {$value = $INTEGER.text;} ;
 selector returns[String code]	:
 		'(' STRING ')'
 			{
-				$code = "aload_"+getLocalIndex(whatIsThis())+"\n"
-					+ "ldc " + $STRING.text + "\n"
+				$code =  "ldc " + $STRING.text + "\n"
 					+ "invokevirtual org/jsoup/nodes/Document/select(Ljava/lang/String;)Lorg/jsoup/select/Elements; \n";
 			};
 		
