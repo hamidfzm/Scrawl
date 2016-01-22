@@ -11,6 +11,10 @@ public class SymbolTable {
         STRING,
         DOCUMENT,
         ELEMENT,
+        ELEMENTS,
+        INTEGER,
+        FLOAT,
+        BOOLEAN,
     }
 
     public class Info {
@@ -34,15 +38,13 @@ public class SymbolTable {
     private HashMap<String, Info> id2Info;
     private HashMap<Integer, Info> local2Info;
     private static final int MAX_LOCAL_VAR = 200;
-
-    public SymbolTable(){
-        id2Info = new HashMap<>();
-        local2Info = new HashMap<>();
-    }
+    private int max_local = 0;
 
     public int put(String id,Type type){
         Info info;
         for(int i=0;i<MAX_LOCAL_VAR;i++) {
+            if(max_local < i)
+                max_local = i;
             if(!local2Info.containsKey(i)){
                 info = new Info(id,type);
                 info.local = i;
@@ -66,6 +68,7 @@ public class SymbolTable {
     public int getLocalIndex(String id){
         return id2Info.get(id).local;
     }
+
 
     public void __debug__printKeys(){
         for(String s: id2Info.keySet())

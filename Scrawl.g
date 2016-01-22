@@ -20,6 +20,7 @@ public enum Type{
         STRING,
         DOCUMENT,
         ELEMENT,
+        ELEMENTS,
         INTEGER,
         FLOAT,
         BOOLEAN,
@@ -46,10 +47,13 @@ public enum Type{
     private HashMap<String, Info> id2Info;
     private HashMap<Integer, Info> local2Info;
     private static final int MAX_LOCAL_VAR = 200;
+    private int max_local = 0;
 
     public int put(String id,Type type){
         Info info;
         for(int i=0;i<MAX_LOCAL_VAR;i++) {
+            if(max_local < i+1)
+                max_local = i+1;
             if(!local2Info.containsKey(i)){
                 info = new Info(id,type);
                 info.local = i;
@@ -89,6 +93,19 @@ public enum Type{
     	return "doc"+(block.size()+1)+"_"+block.peek();
     }
 
+    int lableCount = 0;
+
+    String newLable(){
+    	lableCount++;
+    	return "Lable"+lableCount;
+    }
+    int tempCount = 0;
+
+    String newTemp(){
+    	tempCount++;
+    	return "T"+tempCount;
+    }
+
 }
 
 
@@ -103,7 +120,7 @@ root  returns [String code]:
 procedure returns [String code]:
     'procedure' ID block { $code = ".method private static " + $ID.text + "()V \n"
 	                     + ".limit stack 2 \n"
-	                     + ".limit locals 2 \n"
+	                     + ".limit locals "+max_local+" \n"
     			     + $block.code
 	                     + "return \n"
 	                     + ".end method \n\n";
@@ -138,7 +155,7 @@ block returns [String code]:
 statement returns [String code]:
     reqSt { $code = $reqSt.code; }
     |assSt{ $code = $assSt.code; }
-    |foreachSt
+    |foreachSt { $code = $foreachSt.code; }
     |parseSt
     |printSt { $code = $printSt.code; };
 	
@@ -179,8 +196,33 @@ assSt returns[String code]:
 		}
 	};
 
-foreachSt:
-    'foreach' selector block;
+foreachSt returns[String code]:
+    'foreach' exp
+    	{
+			int t = block.pop()+1;
+			block.push(t);
+			String temp = newTemp();
+			put(whatIsThis1(),Type.ELEMENT);
+			put(temp,Type.ELEMENTS);
+    		String startLable = newLable();
+    		String endLable = newLable();
+    		$code = $exp.code
+    			+ "astore_"+getLocalIndex(temp)+"\n"
+    			+ startLable+":\n"
+    			+ "aload_"+getLocalIndex(temp)+"\n"
+    			+ "invokeinterface java/util/Iterator/hasNext()Z 1\n"
+    			+ "ifeq "+endLable+"\n"
+    			+ "aload_"+getLocalIndex(temp)+"\n"
+                + "invokeinterface java/util/Iterator/next()Ljava/lang/Object; 1\n"
+                + "checkcast org/jsoup/nodes/Element\n"
+                + "astore_"+getLocalIndex(whatIsThis1())+"\n";
+		}
+     block
+     	{
+     		$code += $block.code
+     			+ "goto "+startLable+"\n"
+     			+ endLable+":\n";
+     	};
 	
 parseSt	:	'parse' 'first' exp 'by' ID ';' 
 			{ System.out.println($ID.text+"("+$exp.code+")");}
@@ -242,11 +284,16 @@ exp returns [String code, Type type]:
             
             $type = Type.INTEGER;
         }
-    |selector'@'TEXT{$code="";};
+    |selector{$code = $selector.code;};
 
-selector returns[String value]	:
-		'(' STRING ')' {$value=thisDoc+".Find("+$STRING.text+")";}
-		| THIS {$value=thisDoc;};
+selector returns[String code]	:
+		'(' STRING ')'
+			{
+				$code = "aload_"+getLocalIndex(whatIsThis())+"\n"
+					+ "ldc " + $STRING.text + "\n"
+					+ "invokevirtual org/jsoup/nodes/Document/select(Ljava/lang/String;)Lorg/jsoup/select/Elements; \n"
+                    + "invokevirtual org/jsoup/select/Elements/iterator()Ljava/util/Iterator; \n";
+			};
 		
 
 dictionary returns[String name, String value]:
