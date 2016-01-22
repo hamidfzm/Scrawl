@@ -121,7 +121,7 @@ procedure returns [String code]:
     'procedure' ID block { $code = ".method private static " + $ID.text + "()V \n"
 	                     + ".limit stack 2 \n"
 	                     + ".limit locals "+max_local+" \n"
-    			     + $block.code
+    			+ $block.code
 	                     + "return \n"
 	                     + ".end method \n\n";
     		     };
@@ -137,9 +137,9 @@ mainRoutine returns [String code]:
                      + ".end method \n"
 
                      + ".method public static main([Ljava/lang/String;)V \n"
-                     + ".limit stack 2 \n"
-                     + ".limit locals 2 \n"
                      + $block.code
+                      + ".limit stack 2 \n"
+                     + ".limit locals "+max_local+" \n"
                      + "return \n"
                      + ".end method \n\n";
                      };
@@ -207,6 +207,7 @@ foreachSt returns[String code]:
     		String startLable = newLable();
     		String endLable = newLable();
     		$code = $exp.code
+    			+ "invokevirtual org/jsoup/select/Elements/iterator()Ljava/util/Iterator; \n";
     			+ "astore_"+getLocalIndex(temp)+"\n"
     			+ startLable+":\n"
     			+ "aload_"+getLocalIndex(temp)+"\n"
@@ -284,22 +285,33 @@ exp returns [String code, Type type]:
             
             $type = Type.INTEGER;
         }
-    |selector{$code = $selector.code;};
-
+    |selector{$code = $selector.code; $type = Type.ELEMENTS;}
+    	( index
+    		{
+    			$code += "iconst_"+Integer.valueOf($index.value) +"\n"
+    				+ "invokevirtual org/jsoup/select/Elements/get(I)Ljava/lang/Object;\n";
+    			$type = Type.ELEMENT;
+    		}
+    	('@'TEXT
+    		{
+    			$code += "checkcast org/jsoup/nodes/Element \n"
+				+ "invokevirtual org/jsoup/nodes/Element/text()Ljava/lang/String; \n";
+    			$type = Type.STRING;
+    		}
+    	)?)?;
+    		
+index returns[String value]:
+	'[' INTEGER ']' {$value = $INTEGER.text;} ;
 selector returns[String code]	:
 		'(' STRING ')'
 			{
 				$code = "aload_"+getLocalIndex(whatIsThis())+"\n"
 					+ "ldc " + $STRING.text + "\n"
 					+ "invokevirtual org/jsoup/nodes/Document/select(Ljava/lang/String;)Lorg/jsoup/select/Elements; \n"
-                    + "invokevirtual org/jsoup/select/Elements/iterator()Ljava/util/Iterator; \n";
 			};
 		
 
-dictionary returns[String name, String value]:
-	'['
-
-	']';
+//dictionary returns[String name, String value]:;
 
 integer returns[Integer value]:
 	INTEGER {$value = Integer.valueOf($INTEGER.text);};
