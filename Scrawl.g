@@ -138,7 +138,7 @@ mainRoutine returns [String code]:
 
                      + ".method public static main([Ljava/lang/String;)V \n"
                      + $block.code
-                      + ".limit stack 2 \n"
+                      + ".limit stack 20 \n"
                      + ".limit locals "+max_local+" \n"
                      + "return \n"
                      + ".end method \n\n";
@@ -292,12 +292,17 @@ exp returns [String code, Type type]:
     				+ "invokevirtual org/jsoup/select/Elements/get(I)Ljava/lang/Object;\n";
     			$type = Type.ELEMENT;
     		}
-    	('@'TEXT
+    	('@'(TEXT
     		{
     			$code += "checkcast org/jsoup/nodes/Element \n"
 				+ "invokevirtual org/jsoup/nodes/Element/text()Ljava/lang/String; \n";
     			$type = Type.STRING;
-    		}
+    		}|ID{
+    			$code += "checkcast org/jsoup/nodes/Element \n"
+    				+ "ldc \""+$ID.text+"\"\n"
+				+ "invokevirtual org/jsoup/nodes/Element/attr(Ljava/lang/String;)Ljava/lang/String\n";
+    			$type = Type.STRING;	
+    		})
     	)?)?;
     		
 index returns[String value]:
@@ -307,7 +312,7 @@ selector returns[String code]	:
 			{
 				$code = "aload_"+getLocalIndex(whatIsThis())+"\n"
 					+ "ldc " + $STRING.text + "\n"
-					+ "invokevirtual org/jsoup/nodes/Document/select(Ljava/lang/String;)Lorg/jsoup/select/Elements; \n"
+					+ "invokevirtual org/jsoup/nodes/Document/select(Ljava/lang/String;)Lorg/jsoup/select/Elements; \n";
 			};
 		
 
