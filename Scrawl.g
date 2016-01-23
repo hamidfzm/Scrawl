@@ -129,7 +129,6 @@ procedure returns [String code]:
 mainRoutine returns [String code]:
     'main' block { $code = ".class public Scrawlout \n"
                      + ".super java/lang/Object \n"
-
                      + ".method public <init>()V \n"
                      + "aload_0 \n"
                      + "invokenonvirtual java/lang/Object/<init>()V \n"
@@ -249,6 +248,38 @@ printSt returns [String code]:
     } ;
 
 exp returns [String code, Type type]:
+	x=multExpr {$code = $x.code; $type = $x.type;} 
+	(PLS x=multExpr 
+	{
+	 	if ($type != Type.INTEGER || $x.type != Type.INTEGER){
+    		System.err.println("Not supported addition");
+    	} else {
+    		$code += $x.code + "iadd\n";
+    	}
+	}
+	|MNS x=multExpr 
+	{
+		if ($type != Type.INTEGER || $x.type != Type.INTEGER){
+    		System.err.println("Not supported multiplication");
+    	} else {
+    		$code += $x.code + "isub\n";
+    	}
+	})*;
+
+
+multExpr returns [String code, Type type]
+    :   x=atom {$code = $x.code; $type = $x.type;} 
+    (MLP x=atom 
+    {
+    	if ($type != Type.INTEGER || $x.type != Type.INTEGER){
+    		System.err.println("Not supported multiplication");
+    	} else {
+    		$code += $x.code + "imul\n";
+    	}
+    	
+    })*;
+
+atom returns [String code, Type type]:
     ID
         {
             Info info = get($ID.text);
@@ -285,10 +316,10 @@ exp returns [String code, Type type]:
             
             $type = Type.INTEGER;
         }
-    |selector{$code = $selector.code; $type = Type.ELEMENTS;}
+    |selector{$code = $selector.code; $type = $selector.type;}
     	( index
     		{
-    			$code += "iconst_"+Integer.valueOf($index.value) +"\n"
+    			$code += "iconst_" + $index.value + "\n"
     				+ "invokevirtual org/jsoup/select/Elements/get(I)Ljava/lang/Object;\n";
     			$type = Type.ELEMENT;
     		}
@@ -305,14 +336,25 @@ exp returns [String code, Type type]:
     		})
     	)?)?;
     		
-index returns[String value]:
-	'[' INTEGER ']' {$value = $INTEGER.text;} ;
-selector returns[String code]	:
-		'(' STRING ')'
+index returns[Integer value]:
+	'[' integer ']' {$value = $integer.value;} ;
+
+selector returns[String code, Type type]	:
+		LBR exp RBR
 			{
-				$code = "aload_"+getLocalIndex(whatIsThis())+"\n"
-					+ "ldc " + $STRING.text + "\n"
-					+ "invokevirtual org/jsoup/nodes/Document/select(Ljava/lang/String;)Lorg/jsoup/select/Elements; \n";
+				$type = $exp.type;
+				switch($exp.type){
+					case STRING:
+						$code = "aload_"+getLocalIndex(whatIsThis())+"\n"
+						+ $exp.code
+						+ "invokevirtual org/jsoup/nodes/Document/select(Ljava/lang/String;)Lorg/jsoup/select/Elements; \n";
+						break;
+					case INTEGER:
+						$code = $exp.code;
+						break;
+					default:
+						System.err.println("Not supported parrentisses");
+				}
 			};
 		
 
@@ -360,12 +402,11 @@ AND :  '&&' ;
 OR  :  '||' ;
 NOT :  '!'  ;
 
-DIGIT	:	'0'..'9';
-
 INTEGER: DIGIT+; 
+fragment DIGIT	:	'0'..'9';
 
-FLOAT : INTEGER '.' INTEGER* EXP? | '.' INTEGER EXP? | INTEGER EXP;
-fragment EXP : ('e'|'E') (PLS | MNS)? INTEGER;
+//FLOAT : INTEGER '.' INTEGER* EXP? | '.' INTEGER EXP? | INTEGER EXP;
+//fragment EXP : ('e'|'E') (PLS | MNS)? INTEGER;
 
 COMMENT	: '/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;};
    
