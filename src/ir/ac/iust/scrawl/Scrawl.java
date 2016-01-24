@@ -18,7 +18,7 @@ import java.util.jar.Manifest;
  */
 public class Scrawl {
     public static void main(String[] args) throws IOException {
-        String inputPath = "";
+        String inputPath = null;
         String outputName = "runnable";
         boolean jar = false;
         boolean jasmin = false;
@@ -28,7 +28,7 @@ public class Scrawl {
                 case "--help":
                 case "-h":
                     System.out.println("usage: Scrawl [--output <output name>] [--jar] [--jasmin] <file> \n");
-                    break;
+                    return;
                 case "--ouput":
                 case "-o":
                     i++;
@@ -45,14 +45,20 @@ public class Scrawl {
 
         }
 
+        if(inputPath==null){
+            System.out.println("usage: Scrawl [--output <output name>] [--jar] [--jasmin] <file> \n");
+            return;
+        }
+
         String bytecode = "";
 
         // parse code with generated parser
-        ScrawlLexer lex = null;
+        ScrawlLexer lex;
         try {
             lex = new ScrawlLexer(new ANTLRFileStream(inputPath, "UTF8"));
         } catch (IOException e) {
             System.out.println("File not found");
+            return;
         }
         CommonTokenStream tokens = new CommonTokenStream(lex);
         ScrawlParser g = new ScrawlParser(tokens);
@@ -60,19 +66,29 @@ public class Scrawl {
             bytecode = g.root();
         } catch (RecognitionException e) {
             e.printStackTrace();
+            return;
         }
 
+        File yourFile = new File("out/"+outputName+".j");
+        File directory = new File(yourFile.getParentFile().getAbsolutePath());
+        // create binary file
+        if(!yourFile.exists()) {
+            if(!directory.exists())
+                directory.mkdirs();
+            yourFile.createNewFile();
+        }
         try {
-            // create binary file
-            PrintWriter writer = new PrintWriter("out/"+outputName+".j", "UTF-8");
+            URL location = Scrawl.class.getProtectionDomain().getCodeSource().getLocation();
+            URL jasmin_path = new URL(location,"../"+outputName+".j");
+            System.out.println("Jasmin created in: "+jasmin_path);
+            PrintWriter writer = new PrintWriter(jasmin_path.getPath(), "UTF-8");
             writer.print(bytecode);
             writer.close();
-            URL location = Scrawl.class.getProtectionDomain().getCodeSource().getLocation();
 
             if(jasmin)
                 return;
 
-            (new Main()).assemble(location.getFile() +outputName+".j");
+            (new Main()).assemble(jasmin_path.getPath());
         } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
