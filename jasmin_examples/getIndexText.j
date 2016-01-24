@@ -6,21 +6,20 @@ invokenonvirtual java/lang/Object/<init>()V
 return 
 .end method 
 .method public static main([Ljava/lang/String;)V 
-.limit stack 3
-.limit locals 2
-ldc "http://rishe.co" 
+ldc "http://teamfantasy.varzesh3.com/cns/if/players/player/?idd=2" 
 invokestatic ir/ac/iust/scrawl/scrawlib/Helper/Get(Ljava/lang/String;)Lorg/jsoup/nodes/Document; 
-astore_1
+astore_0 
 getstatic java/lang/System/out Ljava/io/PrintStream; 
-aload_1
-ldc "li"
+aload_0
+ldc "#td2" 
 invokevirtual org/jsoup/nodes/Document/select(Ljava/lang/String;)Lorg/jsoup/select/Elements; 
-iconst_1
+iconst_4
 invokevirtual org/jsoup/select/Elements/get(I)Ljava/lang/Object;
 checkcast org/jsoup/nodes/Element 
 invokevirtual org/jsoup/nodes/Element/text()Ljava/lang/String; 
 invokevirtual  java/io/PrintStream/println(Ljava/lang/String;)V 
+.limit stack 20 
+.limit locals 1 
 return 
 .end method 
-
 

@@ -129,7 +129,6 @@ procedure returns [String code]:
 mainRoutine returns [String code]:
     'main' block { $code = ".class public Scrawlout \n"
                      + ".super java/lang/Object \n"
-
                      + ".method public <init>()V \n"
                      + "aload_0 \n"
                      + "invokenonvirtual java/lang/Object/<init>()V \n"
@@ -206,8 +205,7 @@ foreachSt returns[String code]:
 			put(temp,Type.ELEMENTS);
     		String startLable = newLable();
     		String endLable = newLable();
-    		$code ="aload_"+getLocalIndex(whatIsThis())+"\n"
-			+ $exp.code
+    		$code = $exp.code
     			+ "invokevirtual org/jsoup/select/Elements/iterator()Ljava/util/Iterator; \n"
     			+ "astore_"+getLocalIndex(temp)+"\n"
     			+ startLable+":\n"
@@ -250,52 +248,39 @@ printSt returns [String code]:
     } ;
 
 exp returns [String code, Type type]:
-    STRING
-        {
-            $code = "ldc "+ $STRING.text  + " \n";
-            $type = Type.STRING;
-        }
-    | variable { $code = $variable.code; $type = $variable.type;}
-        	(selector { $code += $selector.code; $type = Type.ELEMENTS;}
-    	(element { $code += $element.code; $type = Type.ELEMENT;}
-    	(attribute { $code += $attribute.code; $type = Type.STRING;}
-    	)?)?)? 
-    | integer
-        {
-            if ( -128 < $integer.value && $integer.value < 128){
-            	$code = "bipush "+ $integer.value  + " \n";
-            } else if ( -32768 < $integer.value && $integer.value < 32767){
-            	$code = "sipush "+ $integer.value  + " \n";
-            } else {
-            	$code = "ldc "+ $integer.value  + " \n";
-            }
-            
-            $type = Type.INTEGER;
-        }
-    |selector{$code = $selector.code; $type = Type.ELEMENTS;}
-        	(element { $code += $element.code; $type = Type.ELEMENT;}
-    	(attribute { $code += $attribute.code; $type = Type.STRING;}
-    	)?)?;
+	x=multExpr {$code = $x.code; $type = $x.type;} 
+	(PLS x=multExpr 
+	{
+	 	if ($type != Type.INTEGER || $x.type != Type.INTEGER){
+    		System.err.println("Not supported addition");
+    	} else {
+    		$code += $x.code + "iadd\n";
+    	}
+	}
+	|MNS x=multExpr 
+	{
+		if ($type != Type.INTEGER || $x.type != Type.INTEGER){
+    		System.err.println("Not supported multiplication");
+    	} else {
+    		$code += $x.code + "isub\n";
+    	}
+	})*;
+
+
+multExpr returns [String code, Type type]
+    :   x=atom {$code = $x.code; $type = $x.type;} 
+    (MLP x=atom 
+    {
+    	if ($type != Type.INTEGER || $x.type != Type.INTEGER){
+    		System.err.println("Not supported multiplication");
+    	} else {
+    		$code += $x.code + "imul\n";
+    	}
     	
-element returns[String code]:
-	index {     	
-		$code = "iconst_"+Integer.valueOf($index.value) +"\n"
-    			+ "invokevirtual org/jsoup/select/Elements/get(I)Ljava/lang/Object;\n";
-    		};
-    		
-attribute returns[String code]:
-	'@'(TEXT
-    	{
-    		$code = "checkcast org/jsoup/nodes/Element \n"
-			+ "invokevirtual org/jsoup/nodes/Element/text()Ljava/lang/String; \n";
-    	}|ID{ 
-		$code = "checkcast org/jsoup/nodes/Element \n"
-			+ "ldc \""+$ID.text+"\"\n"
-			+ "invokevirtual org/jsoup/nodes/Element/attr(Ljava/lang/String;)Ljava/lang/String\n";
-    	});
-    	
-variable  returns [String code, Type type]:
-	ID
+    })*;
+
+atom returns [String code, Type type]:
+    ID
         {
             Info info = get($ID.text);
             $type = info.getType();
@@ -309,19 +294,67 @@ variable  returns [String code, Type type]:
     	        break;
             }
         }
+    |STRING
+        {
+            $code = "ldc "+ $STRING.text  + " \n";
+            $type = Type.STRING;
+        }
     |THIS
     	{
     		$code="aload_"+getLocalIndex(whatIsThis())+"\n";
     		$type=Type.DOCUMENT;
-    	};
+    	}
+    |integer
+        {
+            if ( -128 < $integer.value && $integer.value < 128){
+            	$code = "bipush "+ $integer.value  + " \n";
+            } else if ( -32768 < $integer.value && $integer.value < 32767){
+            	$code = "sipush "+ $integer.value  + " \n";
+            } else {
+            	$code = "ldc "+ $integer.value  + " \n";
+            }
+            
+            $type = Type.INTEGER;
+        }
+    |selector{$code = $selector.code; $type = $selector.type;}
+    	( index
+    		{
+    			$code += "iconst_" + $index.value + "\n"
+    				+ "invokevirtual org/jsoup/select/Elements/get(I)Ljava/lang/Object;\n";
+    			$type = Type.ELEMENT;
+    		}
+    	('@'(TEXT
+    		{
+    			$code += "checkcast org/jsoup/nodes/Element \n"
+				+ "invokevirtual org/jsoup/nodes/Element/text()Ljava/lang/String; \n";
+    			$type = Type.STRING;
+    		}|ID{
+    			$code += "checkcast org/jsoup/nodes/Element \n"
+    				+ "ldc \""+$ID.text+"\"\n"
+				+ "invokevirtual org/jsoup/nodes/Element/attr(Ljava/lang/String;)Ljava/lang/String\n";
+    			$type = Type.STRING;	
+    		})
+    	)?)?;
     		
-index returns[String value]:
-	'[' INTEGER ']' {$value = $INTEGER.text;} ;
-selector returns[String code]	:
-		'(' STRING ')'
+index returns[Integer value]:
+	'[' integer ']' {$value = $integer.value;} ;
+
+selector returns[String code, Type type]	:
+		LBR exp RBR
 			{
-				$code =  "ldc " + $STRING.text + "\n"
-					+ "invokevirtual org/jsoup/nodes/Document/select(Ljava/lang/String;)Lorg/jsoup/select/Elements; \n";
+				$type = $exp.type;
+				switch($exp.type){
+					case STRING:
+						$code = "aload_"+getLocalIndex(whatIsThis())+"\n"
+						+ $exp.code
+						+ "invokevirtual org/jsoup/nodes/Document/select(Ljava/lang/String;)Lorg/jsoup/select/Elements; \n";
+						break;
+					case INTEGER:
+						$code = $exp.code;
+						break;
+					default:
+						System.err.println("Not supported parrentisses");
+				}
 			};
 		
 
@@ -369,12 +402,11 @@ AND :  '&&' ;
 OR  :  '||' ;
 NOT :  '!'  ;
 
-DIGIT	:	'0'..'9';
-
 INTEGER: DIGIT+; 
+fragment DIGIT	:	'0'..'9';
 
-FLOAT : INTEGER '.' INTEGER* EXP? | '.' INTEGER EXP? | INTEGER EXP;
-fragment EXP : ('e'|'E') (PLS | MNS)? INTEGER;
+//FLOAT : INTEGER '.' INTEGER* EXP? | '.' INTEGER EXP? | INTEGER EXP;
+//fragment EXP : ('e'|'E') (PLS | MNS)? INTEGER;
 
 COMMENT	: '/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;};
    
