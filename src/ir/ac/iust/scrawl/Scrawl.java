@@ -39,6 +39,7 @@ public class Scrawl {
                     break;
                 case "--jasmin":
                     jasmin = true;
+                    break;
                 default:
                     inputPath = args[i];
             }
