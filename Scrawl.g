@@ -156,7 +156,8 @@ statement returns [String code]:
     |assSt{ $code = $assSt.code; }
     |foreachSt { $code = $foreachSt.code; }
     |parseSt
-    |printSt { $code = $printSt.code; };
+    |printSt { $code = $printSt.code; }
+    |ifSt { $code = $ifSt.code; };
 	
 reqSt returns [String code] :
 	getReqSt { $code = $getReqSt.code; }
@@ -175,10 +176,46 @@ getReqSt returns [String code]:
 	block{$code += $block.code;};
 
 postReqSt returns [String code]:
-	POST STRING {
+	POST exp {
 		}
 		block;
 
+ifSt returns [String code]:
+	(IF conditionSt a=block)
+	{
+		String end_if = newLable();
+		String if_else = newLable();
+		
+		$code = $conditionSt.code 
+		+ if_else + "\n" 
+		+ $a.code 
+		+ "goto " + end_if + "\n"
+		+ if_else + ":\n";
+	}
+	(ELSE b=block 
+	{
+		$code += $b.code;
+	})? 
+	{
+		$code += end_if + ":\n";
+	};
+
+conditionSt returns [String code]:
+	a=exp EQL b=exp 
+	{
+		if ($a.type == $b.type){
+			switch($a.type){
+				case STRING:
+					$code = $a.code + $b.code + "if_acmpne ";
+					break;
+				case INTEGER:
+					$code = $a.code + $b.code + "if_icmpne ";
+					break;
+				default:
+					System.err.println("Not supported condition");
+			}
+		}
+	};
 assSt returns[String code]:
 	ID '=' exp ';'
 	{
@@ -377,6 +414,8 @@ DELETE	:	'delete';
 TEXT	:	'text';
 
 THIS	:	'this';
+IF		: 	'if';
+ELSE	: 	'else';
 
 STRING : '"' (ESC | ~('\\'|'"'))* '"';
 protected ESC : '\\' ('n' | 'r');
@@ -401,6 +440,7 @@ NEQ :  '!=' ;
 AND :  '&&' ;
 OR  :  '||' ;
 NOT :  '!'  ;
+
 
 INTEGER: DIGIT+; 
 fragment DIGIT	:	'0'..'9';
