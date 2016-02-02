@@ -337,10 +337,16 @@ atom returns [String code, Type type]:
             $type = Type.STRING;
         }
     |THIS
+    {
+   		$code="aload_"+getLocalIndex(whatIsThis())+"\n";
+   		$type=Type.DOCUMENT;
+    }
+    ('@'(TEXT)
     	{
-    		$code="aload_"+getLocalIndex(whatIsThis())+"\n";
-    		$type=Type.DOCUMENT;
-    	}
+   			$code += "checkcast org/jsoup/nodes/Element \n"
+			+ "invokevirtual org/jsoup/nodes/Element/text()Ljava/lang/String; \n";
+   			$type = Type.STRING;
+    	})?
     |integer
         {
             if ( -128 < $integer.value && $integer.value < 128){
